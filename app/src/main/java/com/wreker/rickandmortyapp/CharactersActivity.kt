@@ -7,15 +7,15 @@ import androidx.lifecycle.ViewModelProvider
 import com.wreker.rickandmortyapp.databinding.ActivityCharactersBinding
 import com.wreker.rickandmortyapp.epoxy.CharactersListPagingEpoxyController
 import com.wreker.rickandmortyapp.tools.Constants
-import com.wreker.rickandmortyapp.viewModel.CharactersViewModel
+import com.wreker.rickandmortyapp.viewModel.ViewModel
 
 class CharactersActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityCharactersBinding
     private val epoxyController = CharactersListPagingEpoxyController(::onCharacterSelected)
 
-    private val viewModel : CharactersViewModel by lazy {
-        ViewModelProvider(this)[CharactersViewModel::class.java]
+    private val viewModel : ViewModel by lazy {
+        ViewModelProvider(this)[ViewModel::class.java]
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {

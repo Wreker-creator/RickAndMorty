@@ -1,18 +1,14 @@
 package com.wreker.rickandmortyapp.characters
 
-import android.util.Log
 import androidx.paging.PageKeyedDataSource
-import androidx.paging.PagingSource
-import androidx.paging.PagingState
 import com.wreker.rickandmortyapp.model.GetCharacterByIdResponse
-import com.wreker.rickandmortyapp.repository.CharacterRepository
 import com.wreker.rickandmortyapp.repository.Repository
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.launch
 
 class CharactersDataSource(
     private val coroutineScope: CoroutineScope,
-    private val repository: CharacterRepository
+    private val repository: Repository
 ) : PageKeyedDataSource<Int, GetCharacterByIdResponse>(){
 
     //our functionality here only demands the use if load Initial and after so we do nothing in

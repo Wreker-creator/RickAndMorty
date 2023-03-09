@@ -3,12 +3,12 @@ package com.wreker.rickandmortyapp.characters
 import android.util.Log
 import androidx.paging.DataSource
 import com.wreker.rickandmortyapp.model.GetCharacterByIdResponse
-import com.wreker.rickandmortyapp.repository.CharacterRepository
+import com.wreker.rickandmortyapp.repository.Repository
 import kotlinx.coroutines.CoroutineScope
 
 class CharactersDataSourceFactory(
     private val coroutineScope: CoroutineScope,
-    private val repository: CharacterRepository
+    private val repository: Repository
 ) : DataSource.Factory<Int, GetCharacterByIdResponse>() {
 
 
