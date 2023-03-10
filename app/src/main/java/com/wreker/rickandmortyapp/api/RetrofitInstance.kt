@@ -1,7 +1,10 @@
 package com.wreker.rickandmortyapp.api
 
+import com.chuckerteam.chucker.api.ChuckerCollector
+import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
+import com.wreker.rickandmortyapp.RickAndMortyApplication
 import com.wreker.rickandmortyapp.tools.Constants
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
@@ -38,21 +41,16 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 //per class only one companion object is allowed which acts as a static variable and can
 //be accessed without actually creating an object of the class
 
-class RetrofitInstance {
-
+class RetrofitInstance() {
     companion object{
 
         private val retrofit by lazy {
 
-            val logging = HttpLoggingInterceptor()
-            logging.setLevel(HttpLoggingInterceptor.Level.BODY)
-
-            val client = OkHttpClient.Builder().addInterceptor(logging).build()
             val moshi = Moshi.Builder().addLast(KotlinJsonAdapterFactory()).build()
 
             Retrofit.Builder().baseUrl(Constants.baseUrl)
                 .addConverterFactory(MoshiConverterFactory.create(moshi))
-                .client(client)
+                .client(getLoggingHttpClient())
                 .build()
         }
 
@@ -61,6 +59,26 @@ class RetrofitInstance {
         }
 
         val apiClient = ApiClient(rickAndMortyService)
+
+
+        private fun getLoggingHttpClient() : OkHttpClient{
+            val builder = OkHttpClient.Builder()
+
+            builder.addInterceptor(HttpLoggingInterceptor().apply {
+                setLevel(HttpLoggingInterceptor.Level.BODY)
+            })
+
+            builder.addInterceptor(
+                ChuckerInterceptor.Builder(RickAndMortyApplication())
+                    .collector(ChuckerCollector(RickAndMortyApplication()))
+                    .maxContentLength(250000L)
+                    .redactHeaders(emptySet())
+                    .alwaysReadResponseBody(false)
+                    .build()
+            )
+
+            return builder.build()
+        }
 
     }
 

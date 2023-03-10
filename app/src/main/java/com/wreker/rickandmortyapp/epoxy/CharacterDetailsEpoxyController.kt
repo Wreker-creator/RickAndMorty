@@ -1,16 +1,15 @@
 package com.wreker.rickandmortyapp.epoxy
 
+
 import com.airbnb.epoxy.CarouselModel_
 import com.airbnb.epoxy.EpoxyController
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.squareup.picasso.Picasso
 import com.wreker.rickandmortyapp.R
 import com.wreker.rickandmortyapp.databinding.ModelCharacterDetailsDataPointBinding
 import com.wreker.rickandmortyapp.databinding.ModelCharacterDetailsHeaderBinding
 import com.wreker.rickandmortyapp.databinding.ModelCharacterDetailsImageBinding
 import com.wreker.rickandmortyapp.databinding.ModelEpisodeCorouselItemBinding
-import com.wreker.rickandmortyapp.model.GetCharacterByIdResponse
+import com.wreker.rickandmortyapp.databinding.ModelTitleBinding
 import com.wreker.rickandmortyapp.domain.model.Character
 import com.wreker.rickandmortyapp.domain.model.Episode
 
@@ -64,8 +63,14 @@ class CharacterDetailsEpoxyController : EpoxyController() {
             imageUrl = character!!.image.toString()
         ).id("image").addTo(this)
 
+
+
         //episode carousel list section
         if(character!!.episodeList.isNotEmpty()){
+
+            TitleEpoxyModel(title = "Episodes")
+                .id("title_episodes")
+                .addTo(this)
 
             val items = character!!.episodeList.map {
                 EpisodeCarouselItemEpoxyModel(it).id(it.id)
@@ -74,7 +79,7 @@ class CharacterDetailsEpoxyController : EpoxyController() {
             CarouselModel_()
                 .id("episode_carousel")
                 .models(items)
-                .numViewsToShowOnScreen(1.15f)
+                .numViewsToShowOnScreen(1.20f)
                 .addTo(this)
 
         }
@@ -82,7 +87,7 @@ class CharacterDetailsEpoxyController : EpoxyController() {
         //add data entry points model
         DataPointEpoxyModel(
             title = "Origin",
-            description = character!!.origin!!.name.toString()
+            description = character!!.origin!!.name
         ).id("data_entry1").addTo(this)
 
         DataPointEpoxyModel(
@@ -152,6 +157,16 @@ class CharacterDetailsEpoxyController : EpoxyController() {
             ttvEpisode.text = episode.episode
             ttvEpisodeDetails.text =  "${episode.name}\n${episode.airDate}"
 
+        }
+
+    }
+
+    data class TitleEpoxyModel(
+        val title : String
+    ) : ViewBindingKotlinModel<ModelTitleBinding>(R.layout.model_title){
+
+        override fun ModelTitleBinding.bind() {
+            ttvTitle.text = title
         }
 
     }
