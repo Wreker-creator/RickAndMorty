@@ -2,7 +2,7 @@
 <com.google.android.material.card.MaterialCardView
     app:strokeWidth="@dimen/_1sdp"
     app:strokeColor="@color/black"
-    android:layout_margin="@dimen/_5sdp"
+    android:layout_marginStart="@dimen/_5sdp"
     app:cardCornerRadius="@dimen/_10sdp"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -45,7 +45,7 @@
             android:textSize="@dimen/_13ssp"
             android:padding="@dimen/_5sdp"
             android:layout_marginHorizontal="@dimen/_8sdp"
-            android:text="Some episode Name \nMarch 9 2023"
+            tools:text="Some episode Name \nMarch 9 2023"
             android:id="@+id/ttv_episodeDetails"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
