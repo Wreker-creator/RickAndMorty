@@ -1,12 +1,13 @@
 package com.wreker.rickandmortyapp.repository
 
 import com.wreker.rickandmortyapp.api.RetrofitInstance
+import com.wreker.rickandmortyapp.domain.mapper.CharacterMapper
 import com.wreker.rickandmortyapp.model.GetCharacterByIdResponse
 import com.wreker.rickandmortyapp.model.GetCharactersPageResponse
 
 class Repository {
 
-    suspend fun getCharacterById(characterId : Int) : GetCharacterByIdResponse?{
+    suspend fun getCharacterById(characterId : Int) : com.wreker.rickandmortyapp.domain.model.Character?{
         val request = RetrofitInstance.apiClient.getCharacterById(characterId)
 
         if(request.failed){
@@ -17,7 +18,7 @@ class Repository {
             return null
         }
 
-        return request.body
+        return CharacterMapper.buildFrom(response = request.body)
     }
 
     suspend fun getCharactersPage(pageIndex : Int): GetCharactersPageResponse? {

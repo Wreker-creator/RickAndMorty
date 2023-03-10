@@ -10,6 +10,7 @@ import com.wreker.rickandmortyapp.model.GetCharacterByIdResponse
 import com.wreker.rickandmortyapp.repository.Repository
 import com.wreker.rickandmortyapp.tools.Constants
 import kotlinx.coroutines.launch
+import com.wreker.rickandmortyapp.domain.model.Character
 
 class ViewModel : androidx.lifecycle.ViewModel(){
 
@@ -21,8 +22,8 @@ class ViewModel : androidx.lifecycle.ViewModel(){
     //while we also have a non mutable live data object which can be accessed outside of the
     //viewModel class
 
-    private val _characterByIdLiveData = MutableLiveData<GetCharacterByIdResponse?>()
-    val characterByIdLiveData : LiveData<GetCharacterByIdResponse?> = _characterByIdLiveData
+    private val _characterByIdLiveData = MutableLiveData<Character?>()
+    val characterByIdLiveData : LiveData<Character?> = _characterByIdLiveData
 
     fun refreshCharacter(characterId : Int){
         viewModelScope.launch {

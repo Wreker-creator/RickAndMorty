@@ -9,6 +9,7 @@ import com.wreker.rickandmortyapp.databinding.ModelCharacterDetailsDataPointBind
 import com.wreker.rickandmortyapp.databinding.ModelCharacterDetailsHeaderBinding
 import com.wreker.rickandmortyapp.databinding.ModelCharacterDetailsImageBinding
 import com.wreker.rickandmortyapp.model.GetCharacterByIdResponse
+import com.wreker.rickandmortyapp.domain.model.Character
 
 class CharacterDetailsEpoxyController : EpoxyController() {
 
@@ -25,7 +26,7 @@ class CharacterDetailsEpoxyController : EpoxyController() {
         }
     }
 
-    var characterResponse : GetCharacterByIdResponse? = null
+    var character : Character? = null
     set(value) {
         field = value
         if(field!=null){
@@ -42,34 +43,34 @@ class CharacterDetailsEpoxyController : EpoxyController() {
             return
         }
 
-        if(characterResponse == null){
+        if(character == null){
             //todo error state
             return
         }
 
         //add header model
         HeaderEpoxyModel(
-            name = characterResponse!!.name.toString(),
-            gender = characterResponse!!.gender.toString(),
-            status = characterResponse!!.status.toString()
+            name = character!!.name.toString(),
+            gender = character!!.gender.toString(),
+            status = character!!.status.toString()
         ).id("header").addTo(this)
 
 
         //add image model
         ImageEpoxyModel(
-            imageUrl = characterResponse!!.image.toString()
+            imageUrl = character!!.image.toString()
         ).id("image").addTo(this)
 
 
         //add data entry points model
         DataPointEpoxyModel(
             title = "Origin",
-            description = characterResponse!!.origin!!.name.toString()
+            description = character!!.origin!!.name.toString()
         ).id("data_entry1").addTo(this)
 
         DataPointEpoxyModel(
             title = "Species",
-            description = characterResponse!!.species.toString()
+            description = character!!.species.toString()
         ).id("data_entry2").addTo(this)
 
     }

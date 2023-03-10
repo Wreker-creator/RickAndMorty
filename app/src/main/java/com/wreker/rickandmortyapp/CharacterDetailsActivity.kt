@@ -3,17 +3,14 @@ package com.wreker.rickandmortyapp
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.MenuItem
-import android.view.View
 import androidx.lifecycle.ViewModelProvider
-import com.bumptech.glide.Glide
-import com.bumptech.glide.request.RequestOptions
 import com.wreker.rickandmortyapp.databinding.ActivityMainBinding
 import com.wreker.rickandmortyapp.epoxy.CharacterDetailsEpoxyController
 import com.wreker.rickandmortyapp.tools.Constants
 import com.wreker.rickandmortyapp.tools.toast
 import com.wreker.rickandmortyapp.viewModel.ViewModel
 
-class MainActivity : AppCompatActivity() {
+class CharacterDetailsActivity : AppCompatActivity() {
 
     private val viewModel : ViewModel by lazy {
         ViewModelProvider(this)[ViewModel::class.java]
@@ -30,10 +27,10 @@ class MainActivity : AppCompatActivity() {
 
         supportActionBar?.setDisplayHomeAsUpEnabled(true)
 
-        viewModel.characterByIdLiveData.observe(this) { response ->
-            epoxyController.characterResponse = response
+        viewModel.characterByIdLiveData.observe(this) { character ->
+            epoxyController.character = character
 
-            if (response == null) {
+            if (character == null) {
                 this.toast("Unsuccessful network call")
                 return@observe
             }

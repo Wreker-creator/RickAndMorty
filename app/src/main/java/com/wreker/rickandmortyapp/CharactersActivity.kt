@@ -32,7 +32,7 @@ class CharactersActivity : AppCompatActivity() {
     }
 
     private fun onCharacterSelected(characterId : Int){
-        val intent = Intent(this@CharactersActivity, MainActivity::class.java)
+        val intent = Intent(this@CharactersActivity, CharacterDetailsActivity::class.java)
         intent.putExtra(Constants.INTENT_EXTRA_CHARACTER_ID, characterId)
         startActivity(intent)
     }
