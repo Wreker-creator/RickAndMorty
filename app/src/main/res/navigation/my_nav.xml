@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/my_nav"
+    app:startDestination="@id/characterListFragment">
+
+
+    <fragment
+        android:id="@+id/characterListFragment"
+        android:name="com.wreker.rickandmortyapp.fragments.CharacterListFragment"
+        android:label="Rick And Morty Characters"
+        tools:layout="@layout/fragment_character_list" >
+        <action
+            app:enterAnim="@anim/slide_in_from_right"
+            app:exitAnim="@anim/slide_out_to_left"
+            app:popExitAnim="@anim/slide_out_to_right"
+            app:popEnterAnim="@anim/slide_in_from_left"
+            android:id="@+id/action_characterListFragment_to_characterDetailsFragment"
+            app:destination="@id/characterDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/characterDetailsFragment"
+        android:name="com.wreker.rickandmortyapp.fragments.CharacterDetailsFragment"
+        android:label="Character Details"
+        tools:layout="@layout/fragment_character_details" >
+
+        <deepLink app:uri="https://rickandmortyapi.com/api/character/{characterId}"/>
+
+        <argument
+            android:name="characterId"
+            app:argType="integer" />
+    </fragment>
+</navigation>

@@ -15,8 +15,8 @@
         android:theme="@style/Theme.RickAndMortyApp"
         tools:targetApi="31">
         <activity
-            android:name=".CharactersActivity"
-            android:exported="true" >
+            android:name=".NavGraphActivity"
+            android:exported="true">
 
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -24,15 +24,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-        </activity>
-        <activity
-            android:name=".CharacterDetailsActivity">
-<!--            android:exported="true">-->
-<!--            <intent-filter>-->
-<!--                <action android:name="android.intent.action.MAIN" />-->
+            <nav-graph android:value="@navigation/my_nav"/>
 
-<!--                <category android:name="android.intent.category.LAUNCHER" />-->
-<!--            </intent-filter>-->
         </activity>
     </application>
 
