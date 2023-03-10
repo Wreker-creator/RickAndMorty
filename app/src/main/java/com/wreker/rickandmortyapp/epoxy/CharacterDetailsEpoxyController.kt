@@ -1,5 +1,6 @@
 package com.wreker.rickandmortyapp.epoxy
 
+import com.airbnb.epoxy.CarouselModel_
 import com.airbnb.epoxy.EpoxyController
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions
@@ -8,8 +9,10 @@ import com.wreker.rickandmortyapp.R
 import com.wreker.rickandmortyapp.databinding.ModelCharacterDetailsDataPointBinding
 import com.wreker.rickandmortyapp.databinding.ModelCharacterDetailsHeaderBinding
 import com.wreker.rickandmortyapp.databinding.ModelCharacterDetailsImageBinding
+import com.wreker.rickandmortyapp.databinding.ModelEpisodeCorouselItemBinding
 import com.wreker.rickandmortyapp.model.GetCharacterByIdResponse
 import com.wreker.rickandmortyapp.domain.model.Character
+import com.wreker.rickandmortyapp.domain.model.Episode
 
 class CharacterDetailsEpoxyController : EpoxyController() {
 
@@ -61,6 +64,20 @@ class CharacterDetailsEpoxyController : EpoxyController() {
             imageUrl = character!!.image.toString()
         ).id("image").addTo(this)
 
+        //episode carousel list section
+        if(character!!.episodeList.isNotEmpty()){
+
+            val items = character!!.episodeList.map {
+                EpisodeCarouselItemEpoxyModel(it).id(it.id)
+            }
+
+            CarouselModel_()
+                .id("episode_carousel")
+                .models(items)
+                .numViewsToShowOnScreen(1.15f)
+                .addTo(this)
+
+        }
 
         //add data entry points model
         DataPointEpoxyModel(
@@ -123,6 +140,18 @@ class CharacterDetailsEpoxyController : EpoxyController() {
         override fun ModelCharacterDetailsDataPointBinding.bind() {
             ttvTitle.text = title
             ttvDescription.text = description
+        }
+
+    }
+
+    data class EpisodeCarouselItemEpoxyModel(
+        val episode : Episode
+    ) : ViewBindingKotlinModel<ModelEpisodeCorouselItemBinding>(R.layout.model_episode_corousel_item){
+        override fun ModelEpisodeCorouselItemBinding.bind() {
+
+            ttvEpisode.text = episode.episode
+            ttvEpisodeDetails.text =  "${episode.name}\n${episode.airDate}"
+
         }
 
     }

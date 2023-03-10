@@ -2,6 +2,7 @@ package com.wreker.rickandmortyapp.api
 
 import com.wreker.rickandmortyapp.model.GetCharacterByIdResponse
 import com.wreker.rickandmortyapp.model.GetCharactersPageResponse
+import com.wreker.rickandmortyapp.model.GetEpisodeByIdResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -18,14 +19,24 @@ interface RickAndMortyApi {
     //response. To avoid that we can take some kind of input to the http so we can get the
     //required result.
 
-    @GET("character/{character_id}")
+    @GET("character/{character-id}")
     suspend fun getCharacterById(
-        @Path("character_id") character_id: Int
+        @Path("character-id") character_id: Int
     ) : Response<GetCharacterByIdResponse>
 
     @GET("character")
     suspend fun getCharactersPage(
         @Query("page") pageIndex : Int
     ) : Response<GetCharactersPageResponse>
+
+    @GET("episode/{episode-id}")
+    suspend fun getEpisodeById(
+        @Path("episode-id") episodeId: Int
+    ) : Response<GetEpisodeByIdResponse>
+
+    @GET("episode/{episode-range}")
+    suspend fun getEpisodesByRange(
+        @Path("episode-range") episodeRange : String
+    ) : Response<List<GetEpisodeByIdResponse>>
 
 }

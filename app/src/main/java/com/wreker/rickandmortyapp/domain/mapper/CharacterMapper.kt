@@ -2,13 +2,18 @@ package com.wreker.rickandmortyapp.domain.mapper
 
 import com.wreker.rickandmortyapp.model.GetCharacterByIdResponse
 import com.wreker.rickandmortyapp.domain.model.Character
+import com.wreker.rickandmortyapp.model.GetEpisodeByIdResponse
 
 object CharacterMapper {
 
-    fun buildFrom(response : GetCharacterByIdResponse) : Character{
+    fun buildFrom(
+        response : GetCharacterByIdResponse,
+        episodes : List<GetEpisodeByIdResponse>) : Character{
 
         return Character(
-            episodeList = emptyList(),//todo
+            episodeList = episodes.map {episode->
+                EpisodeMapper.buildFrom(episode)
+            },
             gender = response.gender,
             id = response.id,
             image = response.image,
