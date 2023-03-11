@@ -23,7 +23,7 @@ class ViewModel : androidx.lifecycle.ViewModel(){
     //viewModel class
 
     private val _characterByIdLiveData = MutableLiveData<Character?>()
-    val characterByIdLiveData : LiveData<Character?> = _characterByIdLiveData
+    val characterByIdLiveData : LiveData<Character?> get() = _characterByIdLiveData
 
     fun refreshCharacter(characterId : Int){
         viewModelScope.launch {
@@ -32,6 +32,8 @@ class ViewModel : androidx.lifecycle.ViewModel(){
         }
     }
 
+    //this fetches the data in the form of pages, where we have a set page size and a
+    //set prefetch distance
     private val pageListConfig : PagedList.Config = PagedList.Config.Builder()
         .setPageSize(Constants.pageSize)
         .setPrefetchDistance(Constants.prefetchDistance)

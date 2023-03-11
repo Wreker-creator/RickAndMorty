@@ -1,10 +1,7 @@
 package com.wreker.rickandmortyapp.api
 
-import com.chuckerteam.chucker.api.ChuckerCollector
-import com.chuckerteam.chucker.api.ChuckerInterceptor
 import com.squareup.moshi.Moshi
 import com.squareup.moshi.kotlin.reflect.KotlinJsonAdapterFactory
-import com.wreker.rickandmortyapp.RickAndMortyApplication
 import com.wreker.rickandmortyapp.tools.Constants
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor

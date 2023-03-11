@@ -31,4 +31,9 @@
             android:name="characterId"
             app:argType="integer" />
     </fragment>
+    <fragment
+        android:id="@+id/episodeListFragment"
+        android:name="com.wreker.rickandmortyapp.fragments.EpisodeListFragment"
+        android:label="Episodes"
+        tools:layout="@layout/fragment_episode_list" />
 </navigation>

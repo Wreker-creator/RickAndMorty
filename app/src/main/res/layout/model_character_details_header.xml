@@ -19,6 +19,7 @@
         android:layout_height="wrap_content"/>
 
     <androidx.appcompat.widget.AppCompatImageView
+        app:tint="#CC575757"
         tools:src = "@drawable/ic_female"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
@@ -29,7 +30,7 @@
     <androidx.appcompat.widget.AppCompatTextView
         android:layout_marginTop="@dimen/_3sdp"
         android:id="@+id/ttv_alive"
-        android:text = "Alive"
+        tools:text = "Alive"
         android:textStyle="italic"
         android:textSize="@dimen/_14ssp"
         app:layout_constraintStart_toStartOf="@id/ttv_name"

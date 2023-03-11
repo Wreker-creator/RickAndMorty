@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView
-    app:cardBackgroundColor="#E4E4E4"
+    app:cardBackgroundColor="#B4390000"
     xmlns:tools="http://schemas.android.com/tools"
     app:cardCornerRadius="@dimen/_8sdp"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -14,14 +14,14 @@
 
         <com.google.android.material.textview.MaterialTextView
             android:id="@+id/textView"
-            android:textStyle="bold|italic"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
             android:paddingHorizontal="@dimen/_12sdp"
             android:paddingVertical="@dimen/_8sdp"
-            android:textSize="@dimen/_22ssp"
-            tools:text = "Header Title"
-            android:textColor="@color/black"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"/>
+            android:textColor="@color/white"
+            android:textSize="@dimen/_18ssp"
+            app:fontFamily="sans-serif-condensed"
+            tools:text="Header Title" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 
