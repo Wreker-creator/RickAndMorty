@@ -3,6 +3,7 @@ package com.wreker.rickandmortyapp.api
 import com.wreker.rickandmortyapp.model.GetCharacterByIdResponse
 import com.wreker.rickandmortyapp.model.GetCharactersPageResponse
 import com.wreker.rickandmortyapp.model.GetEpisodeByIdResponse
+import com.wreker.rickandmortyapp.model.GetEpisodeByPageResponse
 import retrofit2.Response
 import retrofit2.http.GET
 import retrofit2.http.Path
@@ -38,5 +39,10 @@ interface RickAndMortyApi {
     suspend fun getEpisodesByRange(
         @Path("episode-range") episodeRange : String
     ) : Response<List<GetEpisodeByIdResponse>>
+
+//    @GET("episode")
+//    suspend fun getEpisodesPage(
+//        @Query("page") pageIndex: Int
+//    ) : Response<GetEpisodeByPageResponse>
 
 }

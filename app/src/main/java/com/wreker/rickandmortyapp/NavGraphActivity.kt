@@ -53,10 +53,7 @@ class NavGraphActivity : AppCompatActivity() {
     }
 
     //handles the functioning for going back which shows up in the action bar at the top
-    override fun onSupportNavigateUp(): Boolean {
-        val navController = findNavController(R.id.fragmentContainerView)
-        return navController.navigateUp(appBarConfiguration)
-                || super.onSupportNavigateUp()
-    }
+
+    
 
 }

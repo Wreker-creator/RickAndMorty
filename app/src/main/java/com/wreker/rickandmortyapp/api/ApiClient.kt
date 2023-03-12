@@ -3,6 +3,7 @@ package com.wreker.rickandmortyapp.api
 import com.wreker.rickandmortyapp.model.GetCharacterByIdResponse
 import com.wreker.rickandmortyapp.model.GetCharactersPageResponse
 import com.wreker.rickandmortyapp.model.GetEpisodeByIdResponse
+import com.wreker.rickandmortyapp.model.GetEpisodeByPageResponse
 import com.wreker.rickandmortyapp.tools.RickAndMortyResponse
 import retrofit2.Response
 
@@ -22,6 +23,10 @@ class ApiClient(private val rickAndMortyService : RickAndMortyApi) {
 
     suspend fun getEpisodeByRange(episodeRange : String) : RickAndMortyResponse<List<GetEpisodeByIdResponse>>{
         return safeApiCall { rickAndMortyService.getEpisodesByRange(episodeRange) }
+    }
+
+    suspend fun getEpisodesPage(pageIndex : Int) : RickAndMortyResponse<GetEpisodeByPageResponse>{
+        return safeApiCall { rickAndMortyService.getEpisodesPage(pageIndex) }
     }
 
     //so here we go and define an inline function called safeApiCall that will accept a function

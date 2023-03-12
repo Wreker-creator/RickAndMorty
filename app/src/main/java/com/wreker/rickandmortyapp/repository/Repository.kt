@@ -5,6 +5,7 @@ import com.wreker.rickandmortyapp.domain.mapper.CharacterMapper
 import com.wreker.rickandmortyapp.model.GetCharacterByIdResponse
 import com.wreker.rickandmortyapp.model.GetCharactersPageResponse
 import com.wreker.rickandmortyapp.model.GetEpisodeByIdResponse
+import com.wreker.rickandmortyapp.model.GetEpisodeByPageResponse
 
 class Repository {
 
