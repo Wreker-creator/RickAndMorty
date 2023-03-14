@@ -28,7 +28,6 @@ class ApiClient(private val rickAndMortyService : RickAndMortyApi) {
     suspend fun getEpisodesPage(pageIndex : Int) : RickAndMortyResponse<GetEpisodeByPageResponse>{
         return safeApiCall { rickAndMortyService.getEpisodesPage(pageIndex) }
     }
-
     //so here we go and define an inline function called safeApiCall that will accept a function
     //pointer to something that will return a response of type T and then we will go ahead
     //and return a RickAndMortyResponse [(our custom response to handle unsuccessful api calls)]

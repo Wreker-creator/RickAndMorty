@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView
+    android:layout_marginStart="@dimen/_5sdp"
+     android:layout_marginEnd="@dimen/_5sdp"
     xmlns:tools="http://schemas.android.com/tools"
     app:strokeWidth="@dimen/_1sdp"
     app:strokeColor="#5E0000"
@@ -14,11 +16,11 @@
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.AppCompatImageView
+            android:src="@drawable/episode_item"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toStartOf="@id/view_separator"
-            android:src="@drawable/episode_item"
+            app:layout_constraintStart_toStartOf="parent"
             android:layout_width="0dp"
             android:layout_height="@dimen/_70sdp"/>
 
