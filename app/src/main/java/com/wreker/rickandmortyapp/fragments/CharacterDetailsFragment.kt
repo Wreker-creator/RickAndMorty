@@ -3,6 +3,7 @@ package com.wreker.rickandmortyapp.fragments
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.wreker.rickandmortyapp.NavGraphActivity
 import com.wreker.rickandmortyapp.R
@@ -27,13 +28,18 @@ class CharacterDetailsFragment : Fragment(R.layout.fragment_character_details) {
         _binding = FragmentCharacterDetailsBinding.bind(view)
         viewModel = (activity as NavGraphActivity).viewModel1
 
-        viewModel.refreshCharacter(safeArgs.characterId)
+        viewModel.fetchCharacter(safeArgs.characterId)
 
         viewModel.characterByIdLiveData.observe(viewLifecycleOwner) { character ->
             epoxyController.character = character
 
             if (character == null) {
                 activity?.toast("Unsuccessful network call")
+                //this here has been done so that in the case of an unsuccessful network call we
+                //can come back to the main screen rather than keeping the user on a data less
+                //screen.
+
+                findNavController().navigateUp()
                 return@observe
             }
         }

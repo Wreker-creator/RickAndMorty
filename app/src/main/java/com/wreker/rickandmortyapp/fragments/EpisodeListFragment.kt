@@ -3,19 +3,38 @@ package com.wreker.rickandmortyapp.fragments
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.lifecycle.lifecycleScope
+import androidx.paging.PagingData
+import com.wreker.rickandmortyapp.NavGraphActivity
 import com.wreker.rickandmortyapp.R
 import com.wreker.rickandmortyapp.databinding.FragmentEpisodeListBinding
+import com.wreker.rickandmortyapp.domain.model.Episode
+import com.wreker.rickandmortyapp.episode.EpisodesUiModel
+import com.wreker.rickandmortyapp.epoxy.EpisodeListEpoxyController
+import com.wreker.rickandmortyapp.viewModel.ViewModel
+import kotlinx.coroutines.flow.collectLatest
+import kotlinx.coroutines.launch
 
 class EpisodeListFragment : Fragment(R.layout.fragment_episode_list) {
 
     private var _binding : FragmentEpisodeListBinding?=null
     private val binding get() = _binding!!
 
+    private lateinit var viewModel: ViewModel
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentEpisodeListBinding.bind(view)
+        viewModel = (activity as NavGraphActivity).viewModel1
 
+        val epoxyController = EpisodeListEpoxyController()
 
+        lifecycleScope.launch {
+            viewModel.flow.collectLatest {pagingData : PagingData<EpisodesUiModel> ->
+                epoxyController.submitData(pagingData)
+            }
+        }
+
+        binding.epoxyRecyclerView.setController(epoxyController)
 
     }
 

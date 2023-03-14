@@ -1,7 +1,9 @@
 package com.wreker.rickandmortyapp.repository
 
 import com.wreker.rickandmortyapp.api.RetrofitInstance
+import com.wreker.rickandmortyapp.api.RickAndMortyCache
 import com.wreker.rickandmortyapp.domain.mapper.CharacterMapper
+import com.wreker.rickandmortyapp.domain.model.Character
 import com.wreker.rickandmortyapp.model.GetCharacterByIdResponse
 import com.wreker.rickandmortyapp.model.GetCharactersPageResponse
 import com.wreker.rickandmortyapp.model.GetEpisodeByIdResponse
@@ -9,28 +11,36 @@ import com.wreker.rickandmortyapp.model.GetEpisodeByPageResponse
 
 class Repository {
 
-    suspend fun getCharacterById(characterId : Int) : com.wreker.rickandmortyapp.domain.model.Character?{
-        val request = RetrofitInstance.apiClient.getCharacterById(characterId)
+    suspend fun getCharacterById(characterId : Int) : Character?{
 
-        if(request.failed){
-            return null
+        //to check if the character network request has already been made or not
+        //if yes then display the character already present as cache otherwise
+        //make the network call and add the response to cache
+        val cachedCharacter = RickAndMortyCache.characterMap[characterId]
+        if(cachedCharacter !=null){
+            return cachedCharacter
         }
 
-        if(!request.data!!.isSuccessful){
+        val request = RetrofitInstance.apiClient.getCharacterById(characterId)
+
+        if(request.failed || !request.success){
             return null
         }
 
         val networkEpisodes = getEpisodesFromCharacterResponse(request.body)
 
-        return CharacterMapper.buildFrom(
+        val character = CharacterMapper.buildFrom(
             response = request.body,
             episodes = networkEpisodes)
+
+        RickAndMortyCache.characterMap[characterId] = character
+        return character
     }
 
     suspend fun getCharactersPage(pageIndex : Int): GetCharactersPageResponse? {
         val request = RetrofitInstance.apiClient.getCharactersPage(pageIndex)
 
-        if(request.failed){
+        if(request.failed || !request.success){
             return null
         }
 
@@ -62,8 +72,19 @@ class Repository {
 
         val request = RetrofitInstance.apiClient.getEpisodeByRange(episodeRange = episodeRange)
 
-        if(request.failed){
+        if(request.failed || !request.success){
             return emptyList()
+        }
+
+        return request.body
+
+    }
+
+    private suspend fun getEpisodePage(pageIndex : Int): GetEpisodeByPageResponse?{
+        val request = RetrofitInstance.apiClient.getEpisodesPage(pageIndex)
+
+        if(request.failed || !request.success){
+            return null
         }
 
         return request.body

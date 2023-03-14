@@ -1,6 +1,7 @@
 package com.wreker.rickandmortyapp.epoxy
 
 
+import android.util.Log
 import com.airbnb.epoxy.CarouselModel_
 import com.airbnb.epoxy.EpoxyController
 import com.squareup.picasso.Picasso
@@ -41,6 +42,7 @@ class CharacterDetailsEpoxyController : EpoxyController() {
 
         if(isLoading){
             //showLoadingState
+            Log.e("TAG", "LOADING STATE INVOKED")
             LoadingEpoxyModel().id("loading").addTo(this)
             return
         }
@@ -154,7 +156,7 @@ class CharacterDetailsEpoxyController : EpoxyController() {
     ) : ViewBindingKotlinModel<ModelEpisodeCorouselItemBinding>(R.layout.model_episode_corousel_item){
         override fun ModelEpisodeCorouselItemBinding.bind() {
 
-            ttvEpisode.text = episode.episode
+            ttvEpisode.text = episode.getFormattedSeasonTruncated()
             ttvEpisodeDetails.text =  "${episode.name}\n${episode.airDate}"
 
         }
