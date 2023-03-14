@@ -46,6 +46,7 @@ class EpisodeListEpoxyController : PagingDataEpoxyController<EpisodesUiModel>() 
 
     }
 
+
     data class EpisodeListTitleEpoxyModel(
         val text : String
     ) : ViewBindingKotlinModel<ModelCharacterListTitleBinding>(R.layout.model_character_list_title){
