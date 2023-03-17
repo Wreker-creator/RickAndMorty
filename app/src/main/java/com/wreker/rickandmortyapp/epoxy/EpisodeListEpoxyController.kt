@@ -1,5 +1,6 @@
 package com.wreker.rickandmortyapp.epoxy
 
+import android.widget.AdapterView.OnItemSelectedListener
 import com.airbnb.epoxy.EpoxyModel
 import com.airbnb.epoxy.paging3.PagingDataEpoxyController
 import com.wreker.rickandmortyapp.R
@@ -8,7 +9,10 @@ import com.wreker.rickandmortyapp.databinding.ModelEpisodeItemBinding
 import com.wreker.rickandmortyapp.domain.model.Episode
 import com.wreker.rickandmortyapp.episode.EpisodesUiModel
 
-class EpisodeListEpoxyController : PagingDataEpoxyController<EpisodesUiModel>() {
+class EpisodeListEpoxyController
+    (
+    private val onEpisodeSelectedListener: (Int) -> Unit
+            ): PagingDataEpoxyController<EpisodesUiModel>() {
     override fun buildItemModel(currentPosition: Int, item: EpisodesUiModel?): EpoxyModel<*> {
 
         return when(item!!){
@@ -16,8 +20,8 @@ class EpisodeListEpoxyController : PagingDataEpoxyController<EpisodesUiModel>() 
                 val episode = (item as EpisodesUiModel.Item).episode
                 EpisodeListItemEpoxyModel(
                     episode = episode,
-                    onCLick = {episodeId ->
-
+                    onCLick = {
+                        onEpisodeSelectedListener(it)
                     }
                 ).id("episode_${episode.id}")
             }
@@ -40,7 +44,9 @@ class EpisodeListEpoxyController : PagingDataEpoxyController<EpisodesUiModel>() 
             ttvEpisodeName.text = episode.name + " (${episode.getFormattedSeasonTruncated()})"
             ttvAirDate.text = episode.airDate
 
-            root.setOnClickListener { episode.id?.let { it1 -> onCLick(it1) } }
+            root.setOnClickListener {
+                onCLick(episode.id!!)
+            }
 
         }
 

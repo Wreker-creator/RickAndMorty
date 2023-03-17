@@ -3,7 +3,9 @@ package com.wreker.rickandmortyapp.repository
 import com.wreker.rickandmortyapp.api.RetrofitInstance
 import com.wreker.rickandmortyapp.api.RickAndMortyCache
 import com.wreker.rickandmortyapp.domain.mapper.CharacterMapper
+import com.wreker.rickandmortyapp.domain.mapper.EpisodeMapper
 import com.wreker.rickandmortyapp.domain.model.Character
+import com.wreker.rickandmortyapp.domain.model.Episode
 import com.wreker.rickandmortyapp.model.GetCharacterByIdResponse
 import com.wreker.rickandmortyapp.model.GetCharactersPageResponse
 import com.wreker.rickandmortyapp.model.GetEpisodeByIdResponse
@@ -90,6 +92,38 @@ class Repository {
         return request.body
 
     }
+
+    suspend fun getEpisodeById(episodeId : Int) : Episode?{
+        val request = RetrofitInstance.apiClient.getEpisodeById(episodeId)
+
+        if(request.failed || !request.success){
+            return null
+        }
+
+        val characterList = getCharactersFromEpisodeResponse(request.body)
+        return EpisodeMapper.buildFrom(
+            networkEpisode = request.body,
+            networkCharacters = characterList
+        )
+
+    }
+
+    private suspend fun getCharactersFromEpisodeResponse(
+        episodeByIdResponse : GetEpisodeByIdResponse
+    ) : List<GetCharacterByIdResponse>{
+        val characterList = episodeByIdResponse.characters?.map {
+            it.substring(startIndex = it.lastIndexOf("/")+1)
+        }
+
+        val characterRange = RetrofitInstance.apiClient.getCharactersByRange(characterRange = characterList.toString())
+        if(characterRange.failed || !characterRange.success){
+            return emptyList()
+        }
+        return characterRange.body
+
+    }
+
+
 
 
 }

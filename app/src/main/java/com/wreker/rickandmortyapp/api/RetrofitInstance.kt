@@ -39,6 +39,7 @@ import retrofit2.converter.moshi.MoshiConverterFactory
 //be accessed without actually creating an object of the class
 
 class RetrofitInstance() {
+
     companion object{
 
         private val retrofit by lazy {

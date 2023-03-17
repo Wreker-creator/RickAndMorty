@@ -35,5 +35,20 @@
         android:id="@+id/episodeListFragment"
         android:name="com.wreker.rickandmortyapp.fragments.EpisodeListFragment"
         android:label="Episodes"
-        tools:layout="@layout/fragment_episode_list" />
+        tools:layout="@layout/fragment_episode_list" >
+        <action
+            android:id="@+id/action_episodeListFragment_to_episodeDetailsBottomSheetFragment"
+            app:destination="@id/episodeDetailsBottomSheetFragment" />
+    </fragment>
+    <dialog
+        tools:layout="@layout/fragment_episode_details"
+        android:id="@+id/episodeDetailsBottomSheetFragment"
+        android:name="com.wreker.rickandmortyapp.fragments.EpisodeDetailsBottomSheetFragment"
+        android:label="EpisodeDetailsBottomSheetFragment" >
+
+        <argument app:argType="integer"
+            android:name="episodeId"
+            android:defaultValue="-1"/>
+
+    </dialog>
 </navigation>

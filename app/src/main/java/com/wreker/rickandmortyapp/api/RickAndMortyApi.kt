@@ -40,6 +40,11 @@ interface RickAndMortyApi {
         @Path("episode-range") episodeRange : String
     ) : Response<List<GetEpisodeByIdResponse>>
 
+    @GET("character/{character-range}")
+    suspend fun getCharactersByRange(
+        @Path("character-range") characterRange : String
+    ) : Response<List<GetCharacterByIdResponse>>
+
     @GET("episode")
     suspend fun getEpisodesPage(
         @Query("page") pageIndex: Int
