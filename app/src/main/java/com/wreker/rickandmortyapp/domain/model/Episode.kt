@@ -5,7 +5,8 @@ data class Episode(
     val name : String? = "",
     val airDate : String? = "",
     val seasonNumber : Int? = 0,
-    val episodeNumber : Int? = 0
+    val episodeNumber : Int? = 0,
+    val characterList : List<Character> = emptyList()
 ){
 
     //to get the season and episode in string format

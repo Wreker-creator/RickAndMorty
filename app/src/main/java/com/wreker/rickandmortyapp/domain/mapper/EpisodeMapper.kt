@@ -1,19 +1,25 @@
 package com.wreker.rickandmortyapp.domain.mapper
 
 import com.wreker.rickandmortyapp.domain.model.Episode
+import com.wreker.rickandmortyapp.model.GetCharacterByIdResponse
 import com.wreker.rickandmortyapp.model.GetEpisodeByIdResponse
 
 object EpisodeMapper {
 
-    fun buildFrom(episodeResponse : GetEpisodeByIdResponse) : Episode{
+    fun buildFrom(
+        networkEpisode : GetEpisodeByIdResponse,
+        networkCharacters : List<GetCharacterByIdResponse> = emptyList()
+    ) : Episode{
 
         return Episode(
-            id = episodeResponse.id,
-            name = episodeResponse.name,
-            airDate = episodeResponse.air_date,
-            seasonNumber = episodeResponse.episode?.let { getSeasonFromEpisodeString(it) },
-            episodeNumber = episodeResponse.episode?.let { getEpisodeFromSeasonString(it) }
-        )
+            id = networkEpisode.id,
+            name = networkEpisode.name,
+            airDate = networkEpisode.air_date,
+            seasonNumber = networkEpisode.episode?.let { getSeasonFromEpisodeString(it) },
+            episodeNumber = networkEpisode.episode?.let { getEpisodeFromSeasonString(it) },
+            characterList = networkCharacters.map {
+                CharacterMapper.buildFrom(it)
+            })
 
     }
 

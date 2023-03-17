@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
+import com.wreker.rickandmortyapp.api.RetrofitInstance
 import com.wreker.rickandmortyapp.api.RickAndMortyCache
 import com.wreker.rickandmortyapp.characters.CharactersDataSourceFactory
 import com.wreker.rickandmortyapp.model.GetCharacterByIdResponse
@@ -88,4 +89,17 @@ class ViewModel : androidx.lifecycle.ViewModel(){
                 }
             }
         }
+
+
+
+    private var _episodeLiveData = MutableLiveData<Episode?>()
+    val episodeLiveData : LiveData<Episode?>get() = _episodeLiveData
+
+    fun fetchEpisode(episodeId : Int){
+        viewModelScope.launch {
+            val episode = repository.getEpisodeById(episodeId)
+            _episodeLiveData.postValue(episode)
+        }
+    }
+
     }

@@ -4,6 +4,7 @@ import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.fragment.findNavController
 import androidx.paging.PagingData
 import com.wreker.rickandmortyapp.NavGraphActivity
 import com.wreker.rickandmortyapp.R
@@ -26,7 +27,14 @@ class EpisodeListFragment : Fragment(R.layout.fragment_episode_list) {
         _binding = FragmentEpisodeListBinding.bind(view)
         viewModel = (activity as NavGraphActivity).viewModel1
 
-        val epoxyController = EpisodeListEpoxyController()
+        val epoxyController = EpisodeListEpoxyController{ episodeId ->
+            val navDirection =
+                EpisodeListFragmentDirections.actionEpisodeListFragmentToEpisodeDetailsBottomSheetFragment(
+                    episodeId = episodeId
+                )
+
+            findNavController().navigate(directions = navDirection)
+        }
 
         lifecycleScope.launch {
             viewModel.flow.collectLatest {pagingData : PagingData<EpisodesUiModel> ->
@@ -37,7 +45,6 @@ class EpisodeListFragment : Fragment(R.layout.fragment_episode_list) {
         binding.epoxyRecyclerView.setController(epoxyController)
 
     }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
