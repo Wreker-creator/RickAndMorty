@@ -36,7 +36,8 @@ class NavGraphActivity : AppCompatActivity() {
             //have parents to which they would go back to when clicked on on switched to.
             topLevelDestinationIds = setOf(
                 R.id.characterListFragment,
-                R.id.episodeListFragment
+                R.id.episodeListFragment,
+                R.id.characterSearchFragment
             ),
             drawerLayout = binding.drawerLayout
         )

@@ -51,4 +51,13 @@
             android:defaultValue="-1"/>
 
     </dialog>
+    <fragment
+        android:id="@+id/characterSearchFragment"
+        android:name="com.wreker.rickandmortyapp.fragments.CharacterSearchFragment"
+        android:label="Search Character"
+        tools:layout="@layout/fragment_character_search" >
+        <action
+            android:id="@+id/action_characterSearchFragment_to_characterDetailsFragment"
+            app:destination="@id/characterDetailsFragment" />
+    </fragment>
 </navigation>

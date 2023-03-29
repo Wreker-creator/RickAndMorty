@@ -12,6 +12,11 @@
                     android:title="@string/rick_and_morty">
                 </item>
 
+                <item android:id="@+id/characterSearchFragment"
+                    android:icon="@drawable/ic_character_search"
+                    android:title="@string/search_character">
+                </item>
+
             </group>
 
         </menu>
