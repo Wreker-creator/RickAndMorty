@@ -35,6 +35,17 @@ class EpisodeListEpoxyController
 
     }
 
+    override fun addModels(models: List<EpoxyModel<*>>) {
+
+        if(models.isEmpty()){
+            LoadingEpoxyModel().id("loading").addTo(this)
+            return
+        }
+
+        super.addModels(models)
+
+    }
+
     data class EpisodeListItemEpoxyModel(
         val episode : Episode,
         val onCLick : (Int) -> Unit

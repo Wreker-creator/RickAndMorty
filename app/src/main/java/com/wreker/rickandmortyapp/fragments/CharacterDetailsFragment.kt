@@ -19,7 +19,7 @@ class CharacterDetailsFragment : Fragment(R.layout.fragment_character_details) {
     private val binding get() = _binding!!
     private lateinit var viewModel : ViewModel
 
-    private var epoxyController = CharacterDetailsEpoxyController()
+    private var epoxyController = CharacterDetailsEpoxyController(::onEpisodeSelected)
     private val safeArgs : CharacterDetailsFragmentArgs by navArgs()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -29,6 +29,8 @@ class CharacterDetailsFragment : Fragment(R.layout.fragment_character_details) {
         viewModel = (activity as NavGraphActivity).viewModel1
 
         viewModel.fetchCharacter(safeArgs.characterId)
+
+        binding.epoxyRecyclerView.setControllerAndBuildModels(epoxyController)
 
         viewModel.characterByIdLiveData.observe(viewLifecycleOwner) { character ->
             epoxyController.character = character
@@ -44,8 +46,6 @@ class CharacterDetailsFragment : Fragment(R.layout.fragment_character_details) {
             }
         }
 
-        binding.epoxyRecyclerView.setControllerAndBuildModels(epoxyController)
-
     }
 
     override fun onDestroyView() {
@@ -53,5 +53,9 @@ class CharacterDetailsFragment : Fragment(R.layout.fragment_character_details) {
         _binding = null
     }
 
+    private fun onEpisodeSelected(episodeId : Int){
+        val directions = CharacterDetailsFragmentDirections.actionCharacterDetailsFragmentToEpisodeDetailsBottomSheetFragment(episodeId)
+        findNavController().navigate(directions)
+    }
 
 }

@@ -14,7 +14,8 @@ import com.wreker.rickandmortyapp.databinding.ModelTitleBinding
 import com.wreker.rickandmortyapp.domain.model.Character
 import com.wreker.rickandmortyapp.domain.model.Episode
 
-class CharacterDetailsEpoxyController : EpoxyController() {
+class CharacterDetailsEpoxyController
+    (private val onEpisodeSelected :(Int) -> Unit): EpoxyController() {
 
     //we will need to change up the data we are passing in the live data to accomplish the
     //different states that we want i.e loading and success
@@ -75,7 +76,7 @@ class CharacterDetailsEpoxyController : EpoxyController() {
                 .addTo(this)
 
             val items = character!!.episodeList.map {
-                EpisodeCarouselItemEpoxyModel(it).id(it.id)
+                EpisodeCarouselItemEpoxyModel(it, onEpisodeSelected).id(it.id)
             }
 
             CarouselModel_()
@@ -152,12 +153,17 @@ class CharacterDetailsEpoxyController : EpoxyController() {
     }
 
     data class EpisodeCarouselItemEpoxyModel(
-        val episode : Episode
+        val episode : Episode,
+        val onEpisodeSelected: (Int) -> Unit
     ) : ViewBindingKotlinModel<ModelEpisodeCorouselItemBinding>(R.layout.model_episode_corousel_item){
         override fun ModelEpisodeCorouselItemBinding.bind() {
 
             ttvEpisode.text = episode.getFormattedSeasonTruncated()
             ttvEpisodeDetails.text =  "${episode.name}\n${episode.airDate}"
+
+            root.setOnClickListener {
+                onEpisodeSelected(episode.id!!)
+            }
 
         }
 

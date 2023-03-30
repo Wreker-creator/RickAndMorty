@@ -30,6 +30,9 @@
         <argument
             android:name="characterId"
             app:argType="integer" />
+        <action
+            android:id="@+id/action_characterDetailsFragment_to_episodeDetailsBottomSheetFragment"
+            app:destination="@id/episodeDetailsBottomSheetFragment" />
     </fragment>
     <fragment
         android:id="@+id/episodeListFragment"
@@ -49,6 +52,9 @@
         <argument app:argType="integer"
             android:name="episodeId"
             android:defaultValue="-1"/>
+        <action
+            android:id="@+id/action_episodeDetailsBottomSheetFragment_to_characterDetailsFragment"
+            app:destination="@id/characterDetailsFragment" />
 
     </dialog>
     <fragment

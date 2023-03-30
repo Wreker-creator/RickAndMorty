@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.wreker.rickandmortyapp.databinding.FragmentEpisodeDetailsBinding
@@ -39,12 +40,14 @@ class EpisodeDetailsBottomSheetFragment : BottomSheetDialogFragment(){
 
             binding.apply {
 
+                progressBar.visibility = View.GONE
+
                 ttvEpisodeName.text = episode.name
                 ttvEpisodeNumber.text = episode.getFormattedSeason().toString()
                 ttvEpisodeAirDate.text = episode.airDate
 
                 binding.epoxyRecyclerView.setControllerAndBuildModels(
-                    EpisodeDetailsEpoxyController(episode.characterList)
+                    EpisodeDetailsEpoxyController(episode.characterList, ::onCharacterSelected)
                 )
 
             }
@@ -57,6 +60,11 @@ class EpisodeDetailsBottomSheetFragment : BottomSheetDialogFragment(){
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    private fun onCharacterSelected(characterId : Int){
+        val directions = EpisodeDetailsBottomSheetFragmentDirections.actionEpisodeDetailsBottomSheetFragmentToCharacterDetailsFragment(characterId)
+        findNavController().navigate(directions)
     }
 
 }

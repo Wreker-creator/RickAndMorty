@@ -3,6 +3,8 @@ package com.wreker.rickandmortyapp.fragments
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
+import androidx.core.view.isEmpty
+import androidx.core.view.isNotEmpty
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.PagingData
@@ -36,13 +38,13 @@ class EpisodeListFragment : Fragment(R.layout.fragment_episode_list) {
             findNavController().navigate(directions = navDirection)
         }
 
+        binding.epoxyRecyclerView.setControllerAndBuildModels(epoxyController)
+
         lifecycleScope.launch {
             viewModel.flow.collectLatest {pagingData : PagingData<EpisodesUiModel> ->
                 epoxyController.submitData(pagingData)
             }
         }
-
-        binding.epoxyRecyclerView.setController(epoxyController)
 
     }
     override fun onDestroyView() {

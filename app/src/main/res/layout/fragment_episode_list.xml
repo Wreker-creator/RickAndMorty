@@ -7,14 +7,14 @@
     tools:context=".fragments.EpisodeListFragment">
 
     <com.airbnb.epoxy.EpoxyRecyclerView
-        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
-        app:spanCount="1"
-        android:padding="@dimen/_10sdp"
-        app:itemSpacing="@dimen/_10sdp"
-        tools:itemCount="12"
-        tools:listitem="@layout/model_episode_item"
         android:id="@+id/epoxyRecyclerView"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"/>
+        android:layout_height="match_parent"
+        android:padding="@dimen/_10sdp"
+        app:itemSpacing="@dimen/_10sdp"
+        app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
+        app:spanCount="1"
+        tools:itemCount="12"
+        tools:listitem="@layout/model_episode_item" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -11,14 +11,19 @@
     <com.google.android.material.textfield.TextInputLayout
         style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
         android:hint="@string/search"
+        app:boxCornerRadiusTopStart="@dimen/_1sdp"
+        app:boxCornerRadiusTopEnd="@dimen/_10sdp"
+        app:boxCornerRadiusBottomStart="@dimen/_10sdp"
+        app:boxCornerRadiusBottomEnd="@dimen/_10sdp"
         android:id="@+id/textContainer"
         app:layout_constraintTop_toTopOf="parent"
         android:layout_width="match_parent"
-        android:layout_height="@dimen/_50sdp">
+        android:layout_height="@dimen/_45sdp">
 
         <com.google.android.material.textfield.TextInputEditText
             android:id="@+id/editText"
             android:maxLines="1"
+            android:textSize="@dimen/_13ssp"
             android:imeOptions="actionSearch"
             android:inputType="text"
             android:layout_width="match_parent"
