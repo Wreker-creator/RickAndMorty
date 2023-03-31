@@ -1,6 +1,8 @@
 package com.wreker.rickandmortyapp.viewModel
 
 import android.util.Log
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import androidx.paging.Pager
@@ -9,6 +11,7 @@ import androidx.paging.cachedIn
 import com.wreker.rickandmortyapp.characterSearch.CharacterSearchPagingSource
 import com.wreker.rickandmortyapp.episode.EpisodePagingSource
 import com.wreker.rickandmortyapp.tools.Constants
+import com.wreker.rickandmortyapp.tools.Event
 
 class CharacterSearchViewModel : ViewModel(){
 
@@ -18,7 +21,7 @@ class CharacterSearchViewModel : ViewModel(){
 
         if(field == null || field?.invalid == true){
             field = CharacterSearchPagingSource(currentUserSearch){exception->
-                Log.e("Local Exception", exception.toString())
+                _localExceptionEventLiveData.postValue(Event(exception))
             }
         }
 
@@ -35,6 +38,13 @@ class CharacterSearchViewModel : ViewModel(){
     ){
         pagingSource!!
     }.flow.cachedIn(viewModelScope)
+
+    //For error handling
+    /*
+    the google recommended approach to handle one time events
+     */
+    private val _localExceptionEventLiveData = MutableLiveData<Event<CharacterSearchPagingSource.LocalException>>()
+    val localExceptionLiveData : LiveData<Event<CharacterSearchPagingSource.LocalException>> = _localExceptionEventLiveData
 
     fun submitQuery(currentText: String) {
         currentUserSearch = currentText.toString()

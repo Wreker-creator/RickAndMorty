@@ -10,12 +10,20 @@ import kotlin.reflect.jvm.internal.impl.descriptors.Visibilities.Local
 
 class  CharacterSearchPagingSource
     (private val userSearch : String,
-    private val localException : (Exception) -> Unit): PagingSource<Int, Character>(){
+    private val localException : (LocalException) -> Unit): PagingSource<Int, Character>(){
 
 
-    sealed class LocalException() : Exception(){
-        object EmptySearch : LocalException()
-        object NoResult : LocalException()
+    sealed class LocalException(
+        val title : String,
+        val description : String = ""
+    ) : Exception(){
+        object EmptySearch : LocalException(
+            title = "Start typing to search!"
+        )
+        object NoResult : LocalException(
+            title = "Whoops!",
+            description = "Looks like your search wields no results"
+        )
     }
 
     override suspend fun load(params: LoadParams<Int>): PagingSource.LoadResult<Int, Character> {
@@ -33,6 +41,13 @@ class  CharacterSearchPagingSource
 
         request.exception?.let {
             return PagingSource.LoadResult.Error(it)
+        }
+
+        //fail to find something for the user search
+        if(request.data?.code() == 404){
+            val exception = LocalException.NoResult
+            localException(exception)
+            return LoadResult.Error(exception)
         }
 
         return PagingSource.LoadResult.Page(

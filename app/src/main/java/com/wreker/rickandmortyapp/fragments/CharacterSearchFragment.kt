@@ -48,8 +48,17 @@ class CharacterSearchFragment : Fragment(R.layout.fragment_character_search){
 
         lifecycleScope.launch {
             viewModel.flow.collectLatest {
+                epoxyController.localException = null
                 epoxyController.submitData(it)
             }
+        }
+
+        viewModel.localExceptionLiveData.observe(viewLifecycleOwner){event->
+
+            event.getContent()?.let {localException ->
+                epoxyController.localException = localException
+            }
+
         }
 
     }
