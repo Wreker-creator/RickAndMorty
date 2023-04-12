@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">RickAndMortyApp</string>
+    <string name="app_name">Rick And Morty</string>
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="characters">Characters</string>
     <string name="rick_and_morty">Rick And Morty</string>
@@ -7,4 +7,5 @@
     <string name="all_episodes">All Episodes</string>
     <string name="search_character">Search Character</string>
     <string name="search">Search -</string>
+    <string name="webClientId">787278182616-hfou97mihmp8js7dno2dgmvqu37gpkqa.apps.googleusercontent.com</string>
 </resources>

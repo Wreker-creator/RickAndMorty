@@ -8,7 +8,7 @@
 
     <fragment
         android:id="@+id/characterListFragment"
-        android:name="com.wreker.rickandmortyapp.fragments.CharacterListFragment"
+        android:name="com.wreker.rickandmortyapp.fragments.characters.CharacterListFragment"
         android:label="Rick And Morty Characters"
         tools:layout="@layout/fragment_character_list" >
         <action
@@ -21,7 +21,7 @@
     </fragment>
     <fragment
         android:id="@+id/characterDetailsFragment"
-        android:name="com.wreker.rickandmortyapp.fragments.CharacterDetailsFragment"
+        android:name="com.wreker.rickandmortyapp.fragments.characters.CharacterDetailsFragment"
         android:label="Character Details"
         tools:layout="@layout/fragment_character_details" >
 
@@ -36,7 +36,7 @@
     </fragment>
     <fragment
         android:id="@+id/episodeListFragment"
-        android:name="com.wreker.rickandmortyapp.fragments.EpisodeListFragment"
+        android:name="com.wreker.rickandmortyapp.fragments.episodes.EpisodeListFragment"
         android:label="Episodes"
         tools:layout="@layout/fragment_episode_list" >
         <action
@@ -46,7 +46,7 @@
     <dialog
         tools:layout="@layout/fragment_episode_details"
         android:id="@+id/episodeDetailsBottomSheetFragment"
-        android:name="com.wreker.rickandmortyapp.fragments.EpisodeDetailsBottomSheetFragment"
+        android:name="com.wreker.rickandmortyapp.fragments.episodes.EpisodeDetailsBottomSheetFragment"
         android:label="EpisodeDetailsBottomSheetFragment" >
 
         <argument app:argType="integer"
@@ -59,7 +59,7 @@
     </dialog>
     <fragment
         android:id="@+id/characterSearchFragment"
-        android:name="com.wreker.rickandmortyapp.fragments.CharacterSearchFragment"
+        android:name="com.wreker.rickandmortyapp.fragments.characters.CharacterSearchFragment"
         android:label="Search Character"
         tools:layout="@layout/fragment_character_search" >
         <action

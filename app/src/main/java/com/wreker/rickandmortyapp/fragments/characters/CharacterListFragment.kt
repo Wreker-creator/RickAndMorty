@@ -1,10 +1,11 @@
-package com.wreker.rickandmortyapp.fragments
+package com.wreker.rickandmortyapp.fragments.characters
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.navigation.fragment.findNavController
-import com.wreker.rickandmortyapp.NavGraphActivity
+import com.google.android.material.navigation.NavigationView
+import com.wreker.rickandmortyapp.activity.MainActivity
 import com.wreker.rickandmortyapp.R
 import com.wreker.rickandmortyapp.databinding.FragmentCharacterListBinding
 import com.wreker.rickandmortyapp.epoxy.CharactersListPagingEpoxyController
@@ -23,7 +24,7 @@ class CharacterListFragment : Fragment(R.layout.fragment_character_list) {
 
         _binding = FragmentCharacterListBinding.bind(view)
 
-        viewModel = (activity as NavGraphActivity).viewModel1
+        viewModel = (activity as MainActivity).viewModel1
         viewModel.charactersPagedLiveData.observe(viewLifecycleOwner){pagedList ->
             epoxyController.submitList(pagedList)
         }
@@ -38,8 +39,18 @@ class CharacterListFragment : Fragment(R.layout.fragment_character_list) {
     }
 
     private fun onCharacterSelected(characterId : Int){
-        val directions = CharacterListFragmentDirections.actionCharacterListFragmentToCharacterDetailsFragment(characterId = characterId)
+        val directions =
+            CharacterListFragmentDirections.actionCharacterListFragmentToCharacterDetailsFragment(
+                characterId = characterId
+            )
         findNavController().navigate(directions)
+    }
+
+    override fun onResume() {
+        super.onResume()
+        activity?.findViewById<NavigationView>(R.id.nav_view)?.setCheckedItem(
+            R.id.characterListFragment
+        )
     }
 
 }

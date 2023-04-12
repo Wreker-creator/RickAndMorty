@@ -19,7 +19,7 @@ class EpisodeDetailsEpoxyController
     }
 
     data class CharacterEpoxyModel(
-        val character: com.wreker.rickandmortyapp.domain.model.Character,
+        val character: Character,
         val onCharacterSelected: (Int) -> Unit
     ) : ViewBindingKotlinModel<ModelCharacterListItemSquareBinding>(R.layout.model_character_list_item_square){
 

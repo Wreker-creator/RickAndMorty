@@ -71,7 +71,7 @@ class ViewModel : androidx.lifecycle.ViewModel(){
                     return@insertSeparators null
                 }
 
-                //if either of the model is header we dont need to add them
+                //if either of the model is header we don't need to add them
                 if(model is EpisodesUiModel.Header || model2 is EpisodesUiModel.Header){
                     return@insertSeparators null
                 }

@@ -1,11 +1,11 @@
-package com.wreker.rickandmortyapp.fragments
+package com.wreker.rickandmortyapp.fragments.characters
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.fragment.navArgs
-import com.wreker.rickandmortyapp.NavGraphActivity
+import com.wreker.rickandmortyapp.activity.MainActivity
 import com.wreker.rickandmortyapp.R
 import com.wreker.rickandmortyapp.databinding.FragmentCharacterDetailsBinding
 import com.wreker.rickandmortyapp.epoxy.CharacterDetailsEpoxyController
@@ -26,7 +26,7 @@ class CharacterDetailsFragment : Fragment(R.layout.fragment_character_details) {
         super.onViewCreated(view, savedInstanceState)
 
         _binding = FragmentCharacterDetailsBinding.bind(view)
-        viewModel = (activity as NavGraphActivity).viewModel1
+        viewModel = (activity as MainActivity).viewModel1
 
         viewModel.fetchCharacter(safeArgs.characterId)
 
@@ -54,7 +54,10 @@ class CharacterDetailsFragment : Fragment(R.layout.fragment_character_details) {
     }
 
     private fun onEpisodeSelected(episodeId : Int){
-        val directions = CharacterDetailsFragmentDirections.actionCharacterDetailsFragmentToEpisodeDetailsBottomSheetFragment(episodeId)
+        val directions =
+            CharacterDetailsFragmentDirections.actionCharacterDetailsFragmentToEpisodeDetailsBottomSheetFragment(
+                episodeId
+            )
         findNavController().navigate(directions)
     }
 

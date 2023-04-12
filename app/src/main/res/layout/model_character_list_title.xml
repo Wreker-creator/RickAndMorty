@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView
-    app:cardBackgroundColor="#B4390000"
     xmlns:tools="http://schemas.android.com/tools"
     app:cardCornerRadius="@dimen/_8sdp"
     xmlns:android="http://schemas.android.com/apk/res/android"
@@ -8,21 +7,16 @@
     android:layout_height="wrap_content"
     xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <androidx.constraintlayout.widget.ConstraintLayout
+    <androidx.appcompat.widget.AppCompatTextView
+        android:background="#B4390000"
+        android:id="@+id/textView"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <com.google.android.material.textview.MaterialTextView
-            android:id="@+id/textView"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:paddingHorizontal="@dimen/_12sdp"
-            android:paddingVertical="@dimen/_8sdp"
-            android:textColor="@color/white"
-            android:textSize="@dimen/_18ssp"
-            app:fontFamily="sans-serif-condensed"
-            tools:text="Header Title" />
-
-    </androidx.constraintlayout.widget.ConstraintLayout>
+        android:layout_height="match_parent"
+        android:paddingHorizontal="@dimen/_12sdp"
+        android:paddingVertical="@dimen/_8sdp"
+        android:textColor="@color/white"
+        android:textSize="@dimen/_18ssp"
+        app:fontFamily="sans-serif-condensed"
+        tools:text="Header Title" />
 
 </com.google.android.material.card.MaterialCardView>

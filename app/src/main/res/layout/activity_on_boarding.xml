@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".activity.OnBoardingActivity">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:id="@+id/placeHolder2"
+        app:srcCompat="@drawable/sign_in_background"
+        android:layout_width="wrap_content"
+        android:layout_height="@dimen/_300sdp"/>
+
+    <androidx.appcompat.widget.AppCompatTextView
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/_25sdp"
+        android:textSize="@dimen/_25ssp"
+        android:textStyle="bold"
+        android:textColor="?colorOnSurface"
+        app:fontFamily="@font/annie_use_your_telescope"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/placeHolder2"
+        android:text="If You loved the show you will love the app\n\nEnjoy :)" />
+
+    <FrameLayout
+        android:id="@+id/btn_signIn"
+        android:background="@drawable/curverd_background"
+        android:layout_margin="@dimen/_25sdp"
+        android:padding="@dimen/_10sdp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+            <androidx.appcompat.widget.LinearLayoutCompat
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+                <com.google.android.material.imageview.ShapeableImageView
+                android:layout_gravity="center"
+                app:srcCompat="@drawable/google"
+                android:layout_width="@dimen/_25sdp"
+                android:layout_height="@dimen/_25sdp"/>
+
+                <androidx.appcompat.widget.AppCompatTextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_weight="1"
+                    android:fontFamily="@font/annie_use_your_telescope"
+                    android:includeFontPadding="true"
+                    android:text="Continue with Google"
+                    android:textStyle="bold"
+                    android:textAllCaps="false" 
+                    android:textAlignment="center"
+                    android:textColor="?colorOnSurface"
+                    android:textSize="@dimen/_25ssp"
+                    app:fontFamily="@font/annie_use_your_telescope" />
+
+            </androidx.appcompat.widget.LinearLayoutCompat>
+
+      </FrameLayout>
+
+</androidx.constraintlayout.widget.ConstraintLayout>

@@ -1,17 +1,14 @@
-package com.wreker.rickandmortyapp.fragments
+package com.wreker.rickandmortyapp.fragments.episodes
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
-import androidx.core.view.isEmpty
-import androidx.core.view.isNotEmpty
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.paging.PagingData
-import com.wreker.rickandmortyapp.NavGraphActivity
+import com.wreker.rickandmortyapp.activity.MainActivity
 import com.wreker.rickandmortyapp.R
 import com.wreker.rickandmortyapp.databinding.FragmentEpisodeListBinding
-import com.wreker.rickandmortyapp.domain.model.Episode
 import com.wreker.rickandmortyapp.episode.EpisodesUiModel
 import com.wreker.rickandmortyapp.epoxy.EpisodeListEpoxyController
 import com.wreker.rickandmortyapp.viewModel.ViewModel
@@ -27,7 +24,7 @@ class EpisodeListFragment : Fragment(R.layout.fragment_episode_list) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentEpisodeListBinding.bind(view)
-        viewModel = (activity as NavGraphActivity).viewModel1
+        viewModel = (activity as MainActivity).viewModel1
 
         val epoxyController = EpisodeListEpoxyController{ episodeId ->
             val navDirection =

@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".fragments.CharacterListFragment">
+    tools:context=".fragments.characters.CharacterListFragment">
 
     <com.airbnb.epoxy.EpoxyRecyclerView
         app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"

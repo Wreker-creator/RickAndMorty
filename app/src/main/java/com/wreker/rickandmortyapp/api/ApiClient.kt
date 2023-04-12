@@ -1,5 +1,6 @@
 package com.wreker.rickandmortyapp.api
 
+import android.util.Log
 import com.wreker.rickandmortyapp.model.GetCharacterByIdResponse
 import com.wreker.rickandmortyapp.model.GetCharactersPageResponse
 import com.wreker.rickandmortyapp.model.GetEpisodeByIdResponse

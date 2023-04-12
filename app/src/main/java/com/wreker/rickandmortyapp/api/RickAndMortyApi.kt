@@ -25,6 +25,7 @@ interface RickAndMortyApi {
         @Path("character-id") character_id: Int
     ) : Response<GetCharacterByIdResponse>
 
+
     @GET("character")
     suspend fun getCharactersPage(
         @Query("page") pageIndex : Int

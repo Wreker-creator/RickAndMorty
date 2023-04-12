@@ -1,4 +1,4 @@
-package com.wreker.rickandmortyapp.fragments
+package com.wreker.rickandmortyapp.fragments.episodes
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -10,6 +10,8 @@ import androidx.navigation.fragment.navArgs
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.wreker.rickandmortyapp.databinding.FragmentEpisodeDetailsBinding
 import com.wreker.rickandmortyapp.epoxy.EpisodeDetailsEpoxyController
+import com.wreker.rickandmortyapp.fragments.episodes.EpisodeDetailsBottomSheetFragmentArgs
+import com.wreker.rickandmortyapp.fragments.episodes.EpisodeDetailsBottomSheetFragmentDirections
 import com.wreker.rickandmortyapp.viewModel.ViewModel
 
 class EpisodeDetailsBottomSheetFragment : BottomSheetDialogFragment(){
@@ -63,7 +65,10 @@ class EpisodeDetailsBottomSheetFragment : BottomSheetDialogFragment(){
     }
 
     private fun onCharacterSelected(characterId : Int){
-        val directions = EpisodeDetailsBottomSheetFragmentDirections.actionEpisodeDetailsBottomSheetFragmentToCharacterDetailsFragment(characterId)
+        val directions =
+            EpisodeDetailsBottomSheetFragmentDirections.actionEpisodeDetailsBottomSheetFragmentToCharacterDetailsFragment(
+                characterId
+            )
         findNavController().navigate(directions)
     }
 

@@ -16,7 +16,14 @@
         android:theme="@style/Theme.RickAndMortyApp"
         tools:targetApi="31">
         <activity
-            android:name=".NavGraphActivity"
+            android:name="com.wreker.rickandmortyapp.activity.MainActivity"
+            android:exported="false">
+
+            <nav-graph android:value="@navigation/my_nav"/>
+
+        </activity>
+
+        <activity android:name ="com.wreker.rickandmortyapp.activity.OnBoardingActivity"
             android:exported="true">
 
             <intent-filter>
@@ -25,9 +32,11 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
 
-            <nav-graph android:value="@navigation/my_nav"/>
-
         </activity>
+
+        <meta-data
+            android:name="preloaded_fonts"
+            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>
