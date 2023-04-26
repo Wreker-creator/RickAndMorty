@@ -4,9 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
-import com.wreker.rickandmortyapp.api.RetrofitInstance
-import com.wreker.rickandmortyapp.api.RickAndMortyCache
-import com.wreker.rickandmortyapp.characters.CharactersDataSourceFactory
+import com.wreker.rickandmortyapp.characters.CharactersPagingSource
 import com.wreker.rickandmortyapp.model.GetCharacterByIdResponse
 import com.wreker.rickandmortyapp.repository.Repository
 import com.wreker.rickandmortyapp.tools.Constants
@@ -35,21 +33,9 @@ class ViewModel : androidx.lifecycle.ViewModel(){
         _characterByIdLiveData.postValue(character)
     }
 
-    //this fetches the data in the form of pages, where we have a set page size and a
-    //set prefetch distance
-    private val pageListConfig : PagedList.Config = PagedList.Config.Builder()
-        .setPageSize(Constants.pageSize)
-        .setPrefetchDistance(Constants.prefetchDistance)
-        .build()
-
-    private val dataSourceFactory = CharactersDataSourceFactory(viewModelScope, repository)
-    val charactersPagedLiveData: LiveData<PagedList<GetCharacterByIdResponse>> =
-        LivePagedListBuilder(
-            dataSourceFactory, pageListConfig
-        ).build()
 
     //this is basically where we are handling when to add header and when to not.
-    val flow = Pager(
+    val episodeListFlow = Pager(
         PagingConfig(
             pageSize = Constants.pageSize,
             prefetchDistance = Constants.prefetchDistance,
@@ -90,6 +76,15 @@ class ViewModel : androidx.lifecycle.ViewModel(){
             }
         }
 
+    val characterListFlow =  Pager(
+        PagingConfig(
+            pageSize = Constants.pageSize,
+            prefetchDistance = Constants.prefetchDistance,
+            enablePlaceholders = false
+        )
+    ){
+        CharactersPagingSource(repository)
+    }.flow
 
 
     private var _episodeLiveData = MutableLiveData<Episode?>()
