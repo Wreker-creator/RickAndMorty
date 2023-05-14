@@ -22,7 +22,7 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.5"
-        app:navGraph="@navigation/my_nav" />
+        app:navGraph="@navigation/rick_and_morty_nav" />
     
     <com.google.android.material.navigation.NavigationView
         app:menu="@menu/menu_drawer_layout"

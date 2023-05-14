@@ -11,5 +11,8 @@
     <color name="green">#FF00C853</color>
     <color name="red">#550000</color>
     <color name="unknown">#3C3B3B</color>
+    <color name="error">#FF0000</color>
+
+    <color name="mtrl_textinput_default_box_stroke_color">#6E6E6E</color>
 
 </resources>

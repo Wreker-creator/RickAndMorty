@@ -9,7 +9,7 @@
 
                 <item android:id="@+id/characterListFragment"
                     android:icon="@drawable/ic_character"
-                    android:title="@string/rick_and_morty">
+                    android:title="All Characters">
                 </item>
 
                 <item android:id="@+id/characterSearchFragment"

@@ -7,8 +7,10 @@ import android.widget.TextView
 import androidx.appcompat.widget.AppCompatImageButton
 import androidx.appcompat.widget.AppCompatImageView
 import androidx.appcompat.widget.AppCompatTextView
+import androidx.core.splashscreen.SplashScreen.Companion.installSplashScreen
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
@@ -19,6 +21,7 @@ import com.google.android.gms.auth.api.identity.Identity
 import com.squareup.picasso.Picasso
 import com.wreker.rickandmortyapp.R
 import com.wreker.rickandmortyapp.databinding.ActivityNavGraphBinding
+import com.wreker.rickandmortyapp.tools.Constants.Companion.firebaseAuth
 import com.wreker.rickandmortyapp.tools.GoogleAuthUiClient
 import com.wreker.rickandmortyapp.viewModel.ViewModel
 import kotlinx.coroutines.launch
@@ -39,14 +42,19 @@ class MainActivity : AppCompatActivity() {
 
     private lateinit var binding : ActivityNavGraphBinding
     private lateinit var appBarConfiguration : AppBarConfiguration
+    lateinit var navController: NavController
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
+
+        installSplashScreen()
+
         super.onCreate(savedInstanceState)
         binding = ActivityNavGraphBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         val navHostFragment = supportFragmentManager.findFragmentById(R.id.fragmentContainerView) as NavHostFragment
-        val navController = navHostFragment.navController
+        navController = navHostFragment.navController
 
         appBarConfiguration = AppBarConfiguration(
 
@@ -56,7 +64,9 @@ class MainActivity : AppCompatActivity() {
             topLevelDestinationIds = setOf(
                 R.id.characterListFragment,
                 R.id.episodeListFragment,
-                R.id.characterSearchFragment
+                R.id.characterSearchFragment,
+                R.id.signUpFragment,
+                R.id.loginFragment
             ),
             drawerLayout = binding.drawerLayout
         )
@@ -80,12 +90,12 @@ class MainActivity : AppCompatActivity() {
     private fun navDrawerFunctions(){
         val headerView = binding.navView.getHeaderView(0)
         val signedInUser = googleAuthUiClient.getSignedInUser()
+//
+//        val displayName = headerView.findViewById<AppCompatTextView>(R.id.ttv_displayName)
+//        displayName.text = firebaseAuth.uid.toString()
 
-        val displayName = headerView.findViewById<AppCompatTextView>(R.id.ttv_displayName)
-        displayName.text = signedInUser?.userName.toString()
-
-        val profilePicture = headerView.findViewById<AppCompatImageView>(R.id.img_profile)
-        Picasso.get().load(googleAuthUiClient.getSignedInUser()?.profilePictureUrl).into(profilePicture)
+//        val profilePicture = headerView.findViewById<AppCompatImageView>(R.id.img_profile)
+//        Picasso.get().load(R.drawable.ic_person).into(profilePicture)
 
         val logoutButton = headerView.findViewById<AppCompatImageButton>(R.id.btn_logout)
         logoutButton.setOnClickListener {
@@ -109,7 +119,7 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.fragmentContainerView)
-        return navController.navigateUp(appBarConfiguration)
+        return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
     }
 
 }

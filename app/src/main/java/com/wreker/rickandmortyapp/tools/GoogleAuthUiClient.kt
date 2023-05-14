@@ -12,6 +12,7 @@ import com.google.firebase.ktx.Firebase
 import com.wreker.rickandmortyapp.R
 import com.wreker.rickandmortyapp.model.SignInResult
 import com.wreker.rickandmortyapp.model.UserData
+import com.wreker.rickandmortyapp.tools.Constants.Companion.firebaseAuth
 import kotlinx.coroutines.tasks.await
 import java.util.concurrent.CancellationException
 
@@ -19,8 +20,6 @@ class GoogleAuthUiClient(
     private val context : Context,
     private val oneTapClient : SignInClient
 ) {
-
-    private val auth = Firebase.auth
 
     //because signing in can take a while so we want to suspend it.
     suspend fun signIn() : IntentSender?{
@@ -47,7 +46,7 @@ class GoogleAuthUiClient(
         val googleCredential = GoogleAuthProvider.getCredential(googleIdToken, null)
 
         return try {
-            val user = auth.signInWithCredential(googleCredential).await().user
+            val user = firebaseAuth.signInWithCredential(googleCredential).await().user
             changeSignedInState(true)
             Toast.makeText(context, "Signed in Success", Toast.LENGTH_SHORT).show()
             SignInResult(
@@ -76,7 +75,7 @@ class GoogleAuthUiClient(
     suspend fun signOut(){
         try {
             oneTapClient.signOut().await()
-            auth.signOut()
+            firebaseAuth.signOut()
             changeSignedInState(false)
             Toast.makeText(context, "Signed out", Toast.LENGTH_SHORT).show()
         }catch (e : Exception){
@@ -85,7 +84,7 @@ class GoogleAuthUiClient(
         }
     }
 
-    fun getSignedInUser() : UserData? = auth.currentUser?.let {
+    fun getSignedInUser() : UserData? = firebaseAuth.currentUser?.let {
         UserData(
             userId = it.uid,
             userName = it.displayName,

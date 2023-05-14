@@ -9,15 +9,15 @@
     <fragment
         android:id="@+id/characterListFragment"
         android:name="com.wreker.rickandmortyapp.fragments.characters.CharacterListFragment"
-        android:label="Rick And Morty Characters"
-        tools:layout="@layout/fragment_character_list" >
+        android:label="All Characters"
+        tools:layout="@layout/fragment_character_list">
         <action
+            android:id="@+id/action_characterListFragment_to_characterDetailsFragment"
+            app:destination="@id/characterDetailsFragment"
             app:enterAnim="@anim/slide_in_from_right"
             app:exitAnim="@anim/slide_out_to_left"
-            app:popExitAnim="@anim/slide_out_to_right"
             app:popEnterAnim="@anim/slide_in_from_left"
-            android:id="@+id/action_characterListFragment_to_characterDetailsFragment"
-            app:destination="@id/characterDetailsFragment" />
+            app:popExitAnim="@anim/slide_out_to_right" />
     </fragment>
     <fragment
         android:id="@+id/characterDetailsFragment"
