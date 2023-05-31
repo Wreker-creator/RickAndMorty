@@ -1,12 +1,13 @@
 package com.wreker.rickandmortyapp.tools
 
 import android.content.Context
+import android.text.Editable
 import android.util.Patterns
 import android.view.View
 import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
 
-fun validEmail(text : String): CharSequence? {
+fun validEmail(text: String): CharSequence? {
 
     if(text.isNotBlank()){
         if(!Patterns.EMAIL_ADDRESS.matcher(text).matches()){
@@ -57,4 +58,12 @@ fun Context.toast(message: String){
 
 fun View.snackbar(message : String){
     Snackbar.make(this, message, Snackbar.LENGTH_SHORT).show()
+}
+
+inline fun <T>safeCall(action : ()->com.wreker.rickandmortyapp.tools.Resource<T>) : com.wreker.rickandmortyapp.tools.Resource<T>{
+    return try {
+        action()
+    }catch (e : Exception){
+        com.wreker.rickandmortyapp.tools.Resource.Error(e.message ?: "An Unknown Error Occurred")
+    }
 }

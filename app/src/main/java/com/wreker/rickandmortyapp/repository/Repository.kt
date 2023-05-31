@@ -1,15 +1,20 @@
 package com.wreker.rickandmortyapp.repository
 
+import com.google.firebase.auth.AuthResult
 import com.wreker.rickandmortyapp.api.RetrofitInstance
 import com.wreker.rickandmortyapp.api.RickAndMortyCache
 import com.wreker.rickandmortyapp.domain.mapper.CharacterMapper
 import com.wreker.rickandmortyapp.domain.mapper.EpisodeMapper
 import com.wreker.rickandmortyapp.domain.model.Character
 import com.wreker.rickandmortyapp.domain.model.Episode
-import com.wreker.rickandmortyapp.model.GetCharacterByIdResponse
-import com.wreker.rickandmortyapp.model.GetCharactersPageResponse
-import com.wreker.rickandmortyapp.model.GetEpisodeByIdResponse
-import com.wreker.rickandmortyapp.model.GetEpisodeByPageResponse
+import com.wreker.rickandmortyapp.model.*
+import com.wreker.rickandmortyapp.tools.Constants.Companion.firebaseAuth
+import com.wreker.rickandmortyapp.tools.Constants.Companion.firebaseDatabase
+import com.wreker.rickandmortyapp.tools.Resource
+import com.wreker.rickandmortyapp.tools.safeCall
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.tasks.await
+import kotlinx.coroutines.withContext
 
 class Repository {
 
@@ -123,7 +128,40 @@ class Repository {
 
     }
 
+//  The createUser function is a suspend function that has a return type of AuthResult which is wrapped in the Resource class that we created earlier. Inside this function, we make use of coroutine’s withContext and make sure that our coroutine runs in the Dispatchers.IO.
+//
+//  We then use the inline function - safeCall that we created in the util directory.
+//
+//  Inside the inline function:
+//
+//  We invoke firebaseAuth.createUserWithEmailAndPassword(email, password) and make sure we add the await() at the end. The result of the execution is stored in the variable result.
+//  Next, we extract the uid of the newly created user and then create an object of the class User with all the respective arguments.
+//  We then invoke databaseReference.child(uid).setValue(user).await() to store the user in Firebase Realtime database.
+//  Lastly, we return a successful result.
+    suspend fun createUser(user : User, userPassword : String) : Resource<AuthResult>{
+        return withContext(Dispatchers.IO){
+            safeCall {
+
+                val registrationResult = firebaseAuth.createUserWithEmailAndPassword(user.email, userPassword).await()
+
+                val userId = registrationResult.user?.uid!!
+                firebaseDatabase.child(userId).setValue(user).await()
+
+                Resource.Success(registrationResult)
+
+            }
+        }
+    }
 
 
+//    Similar to the register function, in the login function we make sure that we add the await() at the end of firebaseAuth.signInWithEmailAndPassword(email, password).
+    suspend fun login(email: String, password: String): Resource<AuthResult> {
+        return withContext(Dispatchers.IO) {
+            safeCall {
+                val result = firebaseAuth.signInWithEmailAndPassword(email, password).await()
+                Resource.Success(result)
+            }
+        }
+    }
 
 }

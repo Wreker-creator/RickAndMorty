@@ -49,37 +49,21 @@
                 app:layout_constraintTop_toTopOf="parent"
                 android:textStyle="bold"
                 android:id="@+id/ph2"
-                android:text="WUBBA LUBBA DUB-DUB!"
+                android:text="@string/signUpScreenHeaderText"
                 android:textColor="?colorSurface"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                android:textSize="@dimen/_17ssp"
+                android:textSize="@dimen/_21ssp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content" />
 
-
             <!--                name-->
             <com.google.android.material.textfield.TextInputLayout
-                app:boxCornerRadiusTopStart="@dimen/_10sdp"
-                app:boxCornerRadiusTopEnd="@dimen/_10sdp"
-                app:boxCornerRadiusBottomStart="@dimen/_10sdp"
-                app:boxCornerRadiusBottomEnd="@dimen/_10sdp"
-                app:boxStrokeColor="?colorSurface"
-                app:boxStrokeWidth="@dimen/_1sdp"
                 android:layout_marginTop="@dimen/_10sdp"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:hint="Name -"
-                app:hintTextColor="?colorSurface"
-                android:textColorHint="?colorSurface"
-                app:startIconTint="?colorSurface"
+                style="@style/textInputLayoutDefaultDesign"
+                android:hint="@string/name"
                 app:startIconDrawable="@drawable/ic_person"
                 android:id="@+id/et_name_container"
-                app:endIconMode="clear_text"
-                app:boxStrokeErrorColor="@color/error"
-                app:errorEnabled="true"
-                app:errorIconDrawable="@drawable/ic_error"
-                app:errorIconTint="@color/error"
-                app:endIconTint="?colorSurface"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/ph2"
@@ -87,10 +71,7 @@
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:textColor="?colorSurface"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:textSize="@dimen/_12ssp"
+                    style="@style/textInputEditTextDefaultDesign"
                     android:id="@+id/et_name"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
@@ -99,22 +80,8 @@
 
             <!--                email-->
             <com.google.android.material.textfield.TextInputLayout
-                app:boxCornerRadiusTopStart="@dimen/_10sdp"
-                app:boxCornerRadiusTopEnd="@dimen/_10sdp"
-                app:boxCornerRadiusBottomStart="@dimen/_10sdp"
-                app:boxCornerRadiusBottomEnd="@dimen/_10sdp"
-                app:boxStrokeColor="?colorSurface"
-                app:boxStrokeWidth="@dimen/_1sdp"
-                app:endIconTint="?colorSurface"
-                app:boxStrokeErrorColor="@color/error"
-                app:errorEnabled="true"
-                app:errorIconDrawable="@drawable/ic_error"
-                app:errorIconTint="@color/error"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:hint="Email -"
-                app:hintTextColor="?colorSurface"
-                android:textColorHint="?colorSurface"
-                app:startIconTint="?colorSurface"
+                style="@style/textInputLayoutDefaultDesign"
+                android:hint="@string/email"
                 app:startIconDrawable="@drawable/ic_email"
                 android:id="@+id/et_email_container"
                 app:layout_constraintStart_toStartOf="parent"
@@ -125,10 +92,7 @@
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:textColor="?colorSurface"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:textSize="@dimen/_12ssp"
+                    style="@style/textInputEditTextDefaultDesign"
                     android:id="@+id/et_email"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
@@ -137,26 +101,11 @@
 
             <!--                password-->
             <com.google.android.material.textfield.TextInputLayout
-                android:visibility="visible"
-                app:boxCornerRadiusTopStart="@dimen/_10sdp"
-                app:boxCornerRadiusTopEnd="@dimen/_10sdp"
-                app:boxCornerRadiusBottomStart="@dimen/_10sdp"
-                app:boxCornerRadiusBottomEnd="@dimen/_10sdp"
-                app:boxStrokeColor="?colorSurface"
-                app:boxStrokeWidth="@dimen/_1sdp"
-                app:boxStrokeErrorColor="@color/error"
-                app:errorEnabled="true"
-                app:errorIconDrawable="@drawable/ic_error"
-                app:errorIconTint="@color/error"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:hint="Password -"
-                app:hintTextColor="?colorSurface"
-                android:textColorHint="?colorSurface"
-                app:startIconTint="?colorSurface"
+                style="@style/textInputLayoutDefaultDesign"
+                android:hint="@string/password"
                 app:startIconDrawable="@drawable/ic_password"
                 android:id="@+id/et_password_container"
                 app:endIconMode="password_toggle"
-                app:endIconTint="?colorSurface"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/et_email_container"
@@ -164,10 +113,7 @@
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:textColor="?colorSurface"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:textSize="@dimen/_12ssp"
+                    style="@style/textInputEditTextDefaultDesign"
                     android:id="@+id/et_password"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
@@ -176,23 +122,8 @@
 
             <!--                confirmPassword-->
             <com.google.android.material.textfield.TextInputLayout
-                android:visibility="visible"
-                app:boxCornerRadiusTopStart="@dimen/_10sdp"
-                app:boxCornerRadiusTopEnd="@dimen/_10sdp"
-                app:boxCornerRadiusBottomStart="@dimen/_10sdp"
-                app:boxCornerRadiusBottomEnd="@dimen/_10sdp"
-                app:boxStrokeColor="?colorSurface"
-                app:boxStrokeWidth="@dimen/_1sdp"
-                app:endIconTint="?colorSurface"
-                app:boxStrokeErrorColor="@color/error"
-                app:errorEnabled="true"
-                app:errorIconDrawable="@drawable/ic_error"
-                app:errorIconTint="@color/error"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense"
-                android:hint="Confirm Password -"
-                app:hintTextColor="?colorSurface"
-                android:textColorHint="?colorSurface"
-                app:startIconTint="?colorSurface"
+                style="@style/textInputLayoutDefaultDesign"
+                android:hint="@string/confirm_password"
                 app:startIconDrawable="@drawable/ic_password"
                 android:id="@+id/et_confirm_password_container"
                 app:layout_constraintStart_toStartOf="parent"
@@ -203,10 +134,7 @@
                 android:layout_height="wrap_content">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:textColor="?colorSurface"
-                    android:inputType="text"
-                    android:maxLines="1"
-                    android:textSize="@dimen/_12ssp"
+                    style="@style/textInputEditTextDefaultDesign"
                     android:id="@+id/et_confirm_password"
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"/>
@@ -217,7 +145,7 @@
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/btnSignUp"
                 android:layout_marginTop="@dimen/_10sdp"
-                android:text="Sign Up"
+                android:text="@string/sign_up"
                 app:cornerRadius="@dimen/_10sdp"
                 android:padding="@dimen/_10sdp"
                 android:textSize="@dimen/_15ssp"
@@ -245,7 +173,7 @@
         android:layout_height="wrap_content">
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:text="Existing User? "
+            android:text="@string/existing_user"
             android:textSize="@dimen/_13ssp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
@@ -255,7 +183,7 @@
             android:layout_height="wrap_content" />
 
         <androidx.appcompat.widget.AppCompatTextView
-            android:text="Login"
+            android:text="@string/login"
             android:textStyle="bold"
             android:textSize="@dimen/_13ssp"
             app:layout_constraintStart_toStartOf="parent"

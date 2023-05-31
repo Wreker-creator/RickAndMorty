@@ -1,6 +1,8 @@
 package com.wreker.rickandmortyapp.activity
 
 import android.content.Intent
+import android.content.SharedPreferences
+import android.os.Build.VERSION_CODES.P
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
@@ -23,8 +25,10 @@ import com.wreker.rickandmortyapp.R
 import com.wreker.rickandmortyapp.databinding.ActivityNavGraphBinding
 import com.wreker.rickandmortyapp.tools.Constants.Companion.firebaseAuth
 import com.wreker.rickandmortyapp.tools.GoogleAuthUiClient
+import com.wreker.rickandmortyapp.tools.toast
 import com.wreker.rickandmortyapp.viewModel.ViewModel
 import kotlinx.coroutines.launch
+import org.checkerframework.checker.units.qual.s
 import kotlin.math.sign
 
 class MainActivity : AppCompatActivity() {
@@ -66,7 +70,8 @@ class MainActivity : AppCompatActivity() {
                 R.id.episodeListFragment,
                 R.id.characterSearchFragment,
                 R.id.signUpFragment,
-                R.id.loginFragment
+                R.id.loginFragment,
+                R.id.profileFragment
             ),
             drawerLayout = binding.drawerLayout
         )
@@ -90,20 +95,21 @@ class MainActivity : AppCompatActivity() {
     private fun navDrawerFunctions(){
         val headerView = binding.navView.getHeaderView(0)
         val signedInUser = googleAuthUiClient.getSignedInUser()
-//
-//        val displayName = headerView.findViewById<AppCompatTextView>(R.id.ttv_displayName)
-//        displayName.text = firebaseAuth.uid.toString()
 
-//        val profilePicture = headerView.findViewById<AppCompatImageView>(R.id.img_profile)
-//        Picasso.get().load(R.drawable.ic_person).into(profilePicture)
+        val profilePicture = headerView.findViewById<AppCompatImageView>(R.id.img_profile)
+
+        if(signedInUser?.profilePictureUrl==null){
+            Picasso.get().load(R.drawable.default_profile_picture).into(profilePicture)
+        }else{
+            Picasso.get().load(signedInUser.profilePictureUrl).into(profilePicture)
+        }
 
         val logoutButton = headerView.findViewById<AppCompatImageButton>(R.id.btn_logout)
         logoutButton.setOnClickListener {
             lifecycleScope.launch {
                 googleAuthUiClient.signOut()
+                goToLoginScreen()
             }
-
-            goToLoginScreen()
 
         }
 

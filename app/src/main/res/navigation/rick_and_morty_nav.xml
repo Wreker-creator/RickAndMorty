@@ -66,4 +66,9 @@
             android:id="@+id/action_characterSearchFragment_to_characterDetailsFragment"
             app:destination="@id/characterDetailsFragment" />
     </fragment>
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="com.wreker.rickandmortyapp.fragments.personal.ProfileFragment"
+        android:label="Profile"
+        tools:layout="@layout/fragment_profile" />
 </navigation>

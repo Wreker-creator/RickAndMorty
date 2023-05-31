@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
 import androidx.paging.*
+import com.google.firebase.auth.AuthResult
 import com.wreker.rickandmortyapp.characters.CharactersPagingSource
-import com.wreker.rickandmortyapp.model.GetCharacterByIdResponse
 import com.wreker.rickandmortyapp.repository.Repository
 import com.wreker.rickandmortyapp.tools.Constants
 import kotlinx.coroutines.launch
@@ -13,6 +13,9 @@ import com.wreker.rickandmortyapp.domain.model.Character
 import com.wreker.rickandmortyapp.domain.model.Episode
 import com.wreker.rickandmortyapp.episode.EpisodePagingSource
 import com.wreker.rickandmortyapp.episode.EpisodesUiModel
+import com.wreker.rickandmortyapp.model.User
+import com.wreker.rickandmortyapp.tools.Resource
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.map
 
 class ViewModel : androidx.lifecycle.ViewModel(){
@@ -97,4 +100,40 @@ class ViewModel : androidx.lifecycle.ViewModel(){
         }
     }
 
+    private val _userSignUpStatus = MutableLiveData<Resource<AuthResult>>()
+    val userSignUpStatus: LiveData<Resource<AuthResult>> = _userSignUpStatus
+
+    private val _userLoginStatus = MutableLiveData<Resource<AuthResult>>()
+    val userLoginStatus: LiveData<Resource<AuthResult>> = _userLoginStatus
+
+    fun createUser(user : User, userLoginPassword: String) {
+        val error =
+            if (userLoginPassword.isEmpty()) {
+                "Empty Strings"
+            } else null
+
+        error?.let {
+            _userSignUpStatus.postValue(Resource.Error(it))
+            return
+        }
+        _userSignUpStatus.postValue(Resource.Loading())
+
+        viewModelScope.launch(Dispatchers.Main) {
+            val registerResult = repository.createUser(user, userPassword = userLoginPassword)
+            _userSignUpStatus.postValue(registerResult)
+        }
     }
+
+    fun signInUser(userEmailAddress: String, userLoginPassword: String) {
+        if (userEmailAddress.isEmpty() || userLoginPassword.isEmpty()) {
+            _userLoginStatus.postValue(Resource.Error("Empty Strings"))
+        } else {
+            _userLoginStatus.postValue(Resource.Loading())
+            viewModelScope.launch(Dispatchers.Main) {
+                val loginResult = repository.login(userEmailAddress, userLoginPassword)
+                _userLoginStatus.postValue(loginResult)
+            }
+        }
+    }
+
+}

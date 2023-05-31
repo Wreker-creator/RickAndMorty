@@ -1,46 +1,36 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
-    <item android:title="@string/characters">
+    <group android:checkableBehavior="single">
 
-        <menu>
+        <item android:id="@+id/characterListFragment"
+            android:icon="@drawable/ic_character"
+            android:title="@string/all_characters">
+        </item>
 
-            <group android:checkableBehavior="single">
+        <item android:id="@+id/characterSearchFragment"
+            android:icon="@drawable/ic_character_search"
+            android:title="@string/search_character">
+        </item>
 
-                <item android:id="@+id/characterListFragment"
-                    android:icon="@drawable/ic_character"
-                    android:title="All Characters">
-                </item>
+    </group>
+    <group android:checkableBehavior="single">
 
-                <item android:id="@+id/characterSearchFragment"
-                    android:icon="@drawable/ic_character_search"
-                    android:title="@string/search_character">
-                </item>
+        <item
+            android:icon="@drawable/ic_episodes"
+            android:id="@+id/episodeListFragment"
+            android:title="@string/all_episodes">
+        </item>
 
-            </group>
+    </group>
+    <group android:checkableBehavior="single">
 
-        </menu>
+        <item
+            android:icon="@drawable/ic_person"
+            android:id="@+id/profileFragment"
+            android:title="@string/profile">
+        </item>
 
-    </item>
-
-    <item android:title="@string/episodes">
-
-        <menu>
-
-            <group android:checkableBehavior="single">
-
-                <item
-                    android:icon="@drawable/ic_episodes"
-                    android:id="@+id/episodeListFragment"
-                    android:title="@string/all_episodes">
-                </item>
-
-            </group>
-
-        </menu>
-
-    </item>
-
-
+    </group>
 
 </menu>

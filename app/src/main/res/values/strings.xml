@@ -1,6 +1,5 @@
 <resources>
     <string name="app_name">Rick And Morty</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="characters">Characters</string>
     <string name="rick_and_morty">Rick And Morty</string>
     <string name="episodes">Episodes</string>
@@ -8,4 +7,25 @@
     <string name="search_character">Search Character</string>
     <string name="search">Search -</string>
     <string name="webClientId">787278182616-hfou97mihmp8js7dno2dgmvqu37gpkqa.apps.googleusercontent.com</string>
+    <string name="profile">Profile</string>
+    <string name="all_characters">All Characters</string>
+    <string name="name">Name -</string>
+    <string name="signUpScreenHeaderText">Wubba Lubba Dub-Dub!</string>
+    <string name="email">Email -</string>
+    <string name="password">Password -</string>
+    <string name="confirm_password">Confirm Password -</string>
+    <string name="sign_up">Sign Up</string>
+    <string name="existing_user">Existing User?</string>
+    <string name="login">Login</string>
+    <string name="welcome_back">Welcome Back!</string>
+    <string name="dont_have_an_account">Dont have an account?</string>
+    <string name="male">Male</string>
+    <string name="female">Female</string>
+    <string name="first_name">First Name -</string>
+    <string name="last_name">Last Name -</string>
+    <string name="address">Address -</string>
+    <string name="state">State -</string>
+    <string name="zip_code">Zip Code -</string>
+    <string name="phone_number">Phone Number -</string>
+    <string name="dd_mm_yyyy">dd / mm / yyyy</string>
 </resources>

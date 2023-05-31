@@ -1,30 +1,35 @@
 package com.wreker.rickandmortyapp.fragments.userLogin
 
 import android.os.Bundle
-import android.util.Log
 import androidx.fragment.app.Fragment
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
 import androidx.core.widget.doOnTextChanged
+import androidx.lifecycle.Observer
 import androidx.navigation.fragment.findNavController
 import com.wreker.rickandmortyapp.R
 import com.wreker.rickandmortyapp.activity.OnBoardingActivity
-import com.wreker.rickandmortyapp.databinding.FragmentLoginBinding
 import com.wreker.rickandmortyapp.databinding.FragmentSignUpBinding
+import com.wreker.rickandmortyapp.model.User
 import com.wreker.rickandmortyapp.tools.Constants.Companion.firebaseAuth
+import com.wreker.rickandmortyapp.tools.Resource
 import com.wreker.rickandmortyapp.tools.toast
 import com.wreker.rickandmortyapp.tools.validEmail
 import com.wreker.rickandmortyapp.tools.validPassword
+import com.wreker.rickandmortyapp.viewModel.ViewModel
 
 class SignUpFragment : Fragment(R.layout.fragment_sign_up){
 
     private var _binding : FragmentSignUpBinding ?= null
     private val binding get() = _binding!!
 
+    private lateinit var viewModel : ViewModel
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentSignUpBinding.bind(view)
+
+        viewModel = (activity as OnBoardingActivity).onBoardingViewModel
 
         binding.apply {
 
@@ -73,39 +78,53 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up){
 
         binding.apply {
 
+            etEmailContainer.error = validEmail(etEmail.text.toString())
+            etPasswordContainer.error = validPassword(etPassword.text.toString())
+            etConfirmPasswordContainer.error = validateConfirmPassword(etConfirmPassword.text.toString())
+
             if(etNameContainer.error != null || etEmailContainer.error != null || etPasswordContainer.error != null || etConfirmPasswordContainer.error != null) {
 
                 activity?.toast("Please check your details!")
 
             }else{
 
+                progressBar(true)
+
                 if(etName.text!=null && etEmail.text!=null && etPassword.text!=null && etConfirmPassword.text!=null ){
 
-                    progressBar(true)
+                    val user = User(
+                        displayName = etName.text.toString(),
+                        email = etEmail.text.toString(),
+                        firstName = null,
+                        lastName = null,
+                        phoneNumber = null,
+                        birthday = null,
+                        profileImage = null
+                    )
 
-                    firebaseAuth.createUserWithEmailAndPassword(etEmail.text.toString(), etPassword.text.toString()).addOnCompleteListener {authResult ->
+                    viewModel.createUser(user,etPassword.text.toString())
 
-                        if(authResult.isSuccessful){
+                    viewModel.userSignUpStatus.observe(viewLifecycleOwner, Observer { authResult ->
 
-                            progressBar(false)
-                            goToHomeScreen(email = etEmail.text.toString(), password = etPassword.text.toString())
-                            activity?.toast("Creating Account...")
+                        when(authResult){
+
+                            is Resource.Success -> {
+                                goToHomeScreen(email = etEmail.text.toString(), password = etPassword.text.toString())
+                                activity?.toast("Creating Account...")
+                            }
+
+                            is Resource.Loading -> {
+                                progressBar(true)
+                            }
+
+                            is Resource.Error -> {
+                                progressBar(false)
+                                activity?.toast("Account creation failed! ${authResult.message}")
+                            }
 
                         }
 
-                        authResult.exception?.let {exception ->
-
-                            Log.e("Creating Account", exception.message.toString())
-
-                        }
-
-                    }.addOnFailureListener {failure ->
-
-                        progressBar(false)
-                        activity?.toast("Account creation failed\n" +
-                                " ${failure.message}")
-
-                    }
+                    })
 
                 } else{
 
@@ -121,24 +140,30 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up){
 
     private fun goToHomeScreen(email : String, password : String){
 
-        firebaseAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener {authResult ->
+        viewModel.signInUser(email, password)
 
-            if(authResult.isSuccessful){
+        viewModel.userSignUpStatus.observe(viewLifecycleOwner, Observer {authResult->
 
-                (activity as OnBoardingActivity).goToMainScreen()
-                activity?.toast("Enjoy :)")
+            when(authResult){
+
+                is Resource.Loading -> {
+                    progressBar(true)
+                }
+
+                is Resource.Success -> {
+                    progressBar(false)
+                    (activity as OnBoardingActivity).goToMainScreen()
+                    activity?.toast("Enjoy :)")
+                }
+
+                is Resource.Error -> {
+                    progressBar(false)
+                    activity?.toast("Error! ${authResult.message}")
+                }
 
             }
 
-        }.addOnCanceledListener {
-
-            activity?.toast("Login Cancelled!")
-
-        }.addOnFailureListener {
-
-            activity?.toast("Error! Login Failed, Please try Again.")
-
-        }
+        })
 
     }
 
@@ -160,22 +185,14 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up){
 
         binding.apply {
 
-            etName.setOnFocusChangeListener { v, hasFocus ->
-
-                if(!hasFocus){
-
-                    if(etName.text.isNullOrBlank()){
-
-                        etNameContainer.error = "Empty Field!"
-
-                    }
-
-                }else{
-
+            etName.setOnFocusChangeListener { _, hasFocus ->
+                if(hasFocus){
                     etNameContainer.error = null
-
+                }else{
+                    if(etName.text.isNullOrBlank()){
+                        etNameContainer.error = "Empty Field!"
+                    }
                 }
-
             }
 
         }
@@ -187,17 +204,11 @@ class SignUpFragment : Fragment(R.layout.fragment_sign_up){
         binding.apply {
 
             etEmail.setOnFocusChangeListener { v, hasFocus ->
-
-                if(!hasFocus){
-
-                    etEmailContainer.error = validEmail(etEmail.text.toString())
-
-                }else{
-
+                if(hasFocus){
                     etEmailContainer.error = null
-
+                }else{
+                    etEmailContainer.error = validEmail(etEmail.text.toString())
                 }
-
             }
 
         }

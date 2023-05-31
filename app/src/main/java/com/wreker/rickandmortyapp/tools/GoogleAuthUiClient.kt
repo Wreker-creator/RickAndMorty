@@ -48,13 +48,15 @@ class GoogleAuthUiClient(
         return try {
             val user = firebaseAuth.signInWithCredential(googleCredential).await().user
             changeSignedInState(true)
-            Toast.makeText(context, "Signed in Success", Toast.LENGTH_SHORT).show()
+            context.toast("Signed in Success")
             SignInResult(
                 data = user?.let {
                     UserData(
                         userId = it.uid,
                         userName = it.displayName,
-                        profilePictureUrl = it.photoUrl?.toString()
+                        profilePictureUrl = it.photoUrl?.toString(),
+                        email = it.email.toString(),
+                        phoneNumber = it.phoneNumber.toString()
                     )
                 },
                 errorMessage = null
@@ -77,7 +79,7 @@ class GoogleAuthUiClient(
             oneTapClient.signOut().await()
             firebaseAuth.signOut()
             changeSignedInState(false)
-            Toast.makeText(context, "Signed out", Toast.LENGTH_SHORT).show()
+            context.toast("Signed out")
         }catch (e : Exception){
             e.printStackTrace()
             if(e is CancellationException) throw e
@@ -88,7 +90,9 @@ class GoogleAuthUiClient(
         UserData(
             userId = it.uid,
             userName = it.displayName,
-            profilePictureUrl = it.photoUrl?.toString()
+            profilePictureUrl = it.photoUrl?.toString(),
+            email = it.email.toString(),
+            phoneNumber = it.phoneNumber.toString()
         )
     }
 

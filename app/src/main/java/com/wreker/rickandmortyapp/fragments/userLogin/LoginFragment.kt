@@ -1,35 +1,35 @@
 package com.wreker.rickandmortyapp.fragments.userLogin
 
 import android.content.Context
-import android.content.Intent
 import android.content.SharedPreferences
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.View
-import android.widget.Toast
 import androidx.activity.result.IntentSenderRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.content.ContentProviderCompat.requireContext
+import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.google.android.gms.auth.api.identity.Identity
 import com.google.android.gms.common.api.CommonStatusCodes
-import com.google.android.gms.common.internal.service.Common
 import com.wreker.rickandmortyapp.R
-import com.wreker.rickandmortyapp.activity.MainActivity
 import com.wreker.rickandmortyapp.activity.OnBoardingActivity
 import com.wreker.rickandmortyapp.databinding.FragmentLoginBinding
 import com.wreker.rickandmortyapp.tools.Constants.Companion.firebaseAuth
 import com.wreker.rickandmortyapp.tools.GoogleAuthUiClient
+import com.wreker.rickandmortyapp.tools.Resource
 import com.wreker.rickandmortyapp.tools.toast
 import com.wreker.rickandmortyapp.tools.validEmail
+import com.wreker.rickandmortyapp.viewModel.ViewModel
 import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment(R.layout.fragment_login) {
 
+    private var count = 1
     private var _binding : FragmentLoginBinding?= null
     private val binding get() = _binding!!
+    private lateinit var viewModel : ViewModel
 
     private val googleAuthUiClient by lazy {
         GoogleAuthUiClient(
@@ -52,6 +52,9 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                     )
 
                 }
+
+                "called when result was ok".checkIfSignedIn()
+
             }
 
             AppCompatActivity.RESULT_CANCELED -> {
@@ -61,17 +64,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             AppCompatActivity.RESULT_FIRST_USER -> {
                 activity?.toast("first time user??")
             }
-//
-//            CommonStatusCodes.SUCCESS -> {
-//
-//                lifecycleScope.launch {
-//
-//                    googleAuthUiClient.signInWithIntent(
-//                        intent = result.data?:return@launch
-//                    )
-//
-//                }
-//            }
 
             CommonStatusCodes.API_NOT_CONNECTED -> {
                 activity?.toast("Api not connected.")
@@ -125,17 +117,6 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
                 activity?.toast("The client attempted to connect to the service but the user is not signed in.")
             }
 
-            //need to check what the fuck is happening here !!!!
-//            CommonStatusCodes.SUCCESS -> {
-//
-//                activity?.toast("Login Success!")
-//
-//            }
-//
-//            CommonStatusCodes.SUCCESS_CACHE -> {
-//                activity?.toast("The operation was successful, but was used the device's cache.")
-//            }
-
             CommonStatusCodes.TIMEOUT -> {
                 activity?.toast("Network Timed out while attempting to login!")
             }
@@ -163,6 +144,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         _binding = FragmentLoginBinding.bind(view)
+        viewModel = (activity as OnBoardingActivity).onBoardingViewModel
 
         binding.apply {
 
@@ -203,11 +185,7 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
                 }
 
-                checkIfSignedIn()
-
             }
-
-
 
         }
 
@@ -218,7 +196,9 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     }
 
-    private fun checkIfSignedIn(){
+    private fun String.checkIfSignedIn() {
+
+        activity?.toast(this)
 
         val sharedPref = requireContext().getSharedPreferences("signInState", Context.MODE_PRIVATE)
         sharedPref.registerOnSharedPreferenceChangeListener(SharedPreferences.OnSharedPreferenceChangeListener { _, key ->
@@ -226,7 +206,8 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
             if(key.equals("finished")){
                 if(googleAuthUiClient.isSignedIn()){
                     (activity as OnBoardingActivity).goToMainScreen()
-                    activity?.toast("Checked the change in value")
+                    activity?.toast("Checked the change in value -> $count")
+                    count++
                 }
             }
 
@@ -236,32 +217,35 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
 
     private fun handleLogin() {
 
+        progressBar(true)
+
         if(binding.etEmailContainer.error == null && binding.etPasswordContainer.error == null){
 
-            progressBar(true)
+            viewModel.signInUser(binding.etEmail.text.toString(), binding.etPassword.text.toString())
 
-            firebaseAuth.signInWithEmailAndPassword(binding.etEmail.text.toString(), binding.etPassword.text.toString()).addOnCompleteListener {
+            viewModel.userLoginStatus.observe(viewLifecycleOwner, Observer{authResult ->
 
-                if(it.isSuccessful) {
+                when(authResult){
 
-                    (activity as OnBoardingActivity).goToMainScreen()
-                    activity?.toast("Login success!")
-                    progressBar(false)
+                    is Resource.Loading -> {
+                        progressBar(true)
+                    }
+
+                    is Resource.Success -> {
+                        (activity as OnBoardingActivity).goToMainScreen()
+                        activity?.toast("Login success!")
+                        progressBar(false)
+                    }
+
+                    is Resource.Error -> {
+                        progressBar(false)
+                        activity?.toast("Account login failed\n" +
+                                "${authResult.message}")
+                    }
 
                 }
 
-            }.addOnCanceledListener {
-
-                progressBar(false)
-                activity?.toast("Login Canceled!")
-
-            }.addOnFailureListener {failure ->
-
-                progressBar(false)
-                activity?.toast("Account creation failed\n" +
-                        " ${failure.message}")
-
-            }
+            })
 
         }else{
 
@@ -317,15 +301,11 @@ class LoginFragment : Fragment(R.layout.fragment_login) {
     private fun progressBar(bool : Boolean){
 
         if(bool){
-
             binding.progressBar.visibility = View.VISIBLE
             binding.progressBackground.visibility = View.VISIBLE
-
         }else{
-
             binding.progressBar.visibility = View.GONE
             binding.progressBackground.visibility = View.GONE
-
         }
 
     }
